@@ -9,4 +9,12 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="in.uds.vishnugt.alpha3.ClientSelection_Activity">
 
+    <Spinner
+        android:layout_width="match_parent  "
+        android:layout_height="wrap_content"
+        android:id="@+id/spinner"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="177dp"
+        android:entries="@array/client_list"/>
 </RelativeLayout>

@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">Alpha3</string>
+    <string-array name="client_list">
+        <item>SRIRAM CNSTRNTS</item>
+        <item>Vishnu</item>
+        <item>Shyam</item>
+    </string-array>
+
 </resources>
