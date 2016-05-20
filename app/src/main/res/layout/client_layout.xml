@@ -9,6 +9,4 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="in.uds.vishnugt.alpha3.ClientSelection_Activity">
 
-
-
 </RelativeLayout>

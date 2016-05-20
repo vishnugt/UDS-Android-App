@@ -3,6 +3,7 @@ package in.uds.vishnugt.alpha3;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -18,6 +19,10 @@ public class login_activity extends AppCompatActivity {
         username = (EditText)findViewById(R.id.username);
         password = (EditText)findViewById(R.id.password);
 
+
+    }
+    public void signin(View v)
+    {
         if(username.getText().toString().equals("admin") && password.getText().toString().equals("admin"))
         {
             Intent intent = new Intent(this, ClientSelection_Activity.class);

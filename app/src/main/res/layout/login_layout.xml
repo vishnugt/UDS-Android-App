@@ -15,7 +15,8 @@
         android:text="Sign In"
         android:id="@+id/button"
         android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:onClick="signin"/>
 
     <EditText
         android:layout_width="match_parent"
