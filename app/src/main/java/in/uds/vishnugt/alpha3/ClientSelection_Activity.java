@@ -39,13 +39,8 @@ public class ClientSelection_Activity extends ActionBarActivity {
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
         mAdapter = new MyRecyclerViewAdapter(getDataSet());
+        Log.e("Error",getDataSet().toString());
         mRecyclerView.setAdapter(mAdapter);
-
-        // Code to Add an item with default animation
-        //((MyRecyclerViewAdapter) mAdapter).addItem(obj, index);
-
-        // Code to remove an item with default animation
-        //((MyRecyclerViewAdapter) mAdapter).deleteItem(index);
     }
 
 
