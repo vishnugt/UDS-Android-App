@@ -22,7 +22,7 @@ import android.view.View;
 
 import java.util.ArrayList;
 
-public class ClientSelection_Activity extends Activity {
+public class ClientSelection_Activity extends ActionBarActivity {
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
