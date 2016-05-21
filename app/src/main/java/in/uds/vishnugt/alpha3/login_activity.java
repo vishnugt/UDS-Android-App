@@ -23,7 +23,7 @@ public class login_activity extends AppCompatActivity {
     }
     public void signin(View v)
     {
-        if(username.getText().toString().equals("admin") && password.getText().toString().equals("admin"))
+        if(!(username.getText().toString().equals("admin") && password.getText().toString().equals("admin")))
         {
             Intent intent = new Intent(this, ClientSelection_Activity.class);
             this.startActivity(intent);
