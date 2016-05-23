@@ -1,12 +1,16 @@
 package in.uds.vishnugt.alpha3;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 
@@ -22,6 +26,7 @@ import java.net.URL;
 
 
 public class login_activity extends AppCompatActivity {
+    ProgressDialog progress;
     EditText username;
     EditText password;
     String passwordintext;
@@ -41,6 +46,12 @@ public class login_activity extends AppCompatActivity {
 
     public void signin(View v)
     {
+
+        progress = new ProgressDialog(this);
+        progress.setTitle("Loading");
+        progress.setMessage("Wait while loading...");
+        progress.setCancelable(false);
+        progress.show();
         passwordintext = password.getText().toString();
         usernameintext = username.getText().toString();
         new LongOperation().execute("");
@@ -82,7 +93,7 @@ public class login_activity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(String result) {
-        Log.d("result", result);
+            Log.d("result", result);
 
             if(outputresponse.toCharArray()[12]=='t')
             {
@@ -95,16 +106,19 @@ public class login_activity extends AppCompatActivity {
 
         @Override
         protected void onPreExecute() {
+
             //Toast.makeText(getApplicationContext(), "execction started", Toast.LENGTH_SHORT).show();
 
         }
 
         @Override
-        protected void onProgressUpdate(Void... values) {}
+        protected void onProgressUpdate(Void... values) {
+        }
     }
 
     public void aftercomplete()
     {
+        progress.dismiss();
         if(loginState)
         {
             //Toast.makeText(getApplicationContext(), "User logged in", Toast.LENGTH_SHORT).show();
