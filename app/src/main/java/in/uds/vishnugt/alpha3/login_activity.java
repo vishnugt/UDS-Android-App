@@ -32,7 +32,8 @@ import java.net.URL;
 public class login_activity extends AppCompatActivity {
     EditText username;
     EditText password;
-
+    String passwordintext;
+    String usernameintext;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,7 +45,10 @@ public class login_activity extends AppCompatActivity {
 
     }
 
-    public void signin(View v) {
+    public void signin(View v)
+    {
+        passwordintext = password.getText().toString();
+        usernameintext = username.getText().toString();
         new LongOperation().execute("");
         /*if(!(username.getText().toString().equals("admin") && password.getText().toString().equals("admin")))
         {
@@ -62,8 +66,6 @@ public class login_activity extends AppCompatActivity {
 
         @Override
         protected String doInBackground(String... params) {
-            InputStream inputStream = null;
-            String result = "";
 
             try {
                 URL url = new URL("http://58.68.16.118:8080/flow/rest/login");
@@ -72,7 +74,7 @@ public class login_activity extends AppCompatActivity {
                 connection.setDoOutput(true);
                 connection.setRequestProperty("Content-Type", "application/json");
                 OutputStreamWriter osw = new OutputStreamWriter(connection.getOutputStream());
-                osw.write(String.format("{\"loggedIn\":false,\"password\":\"cats\",\"username\":\"cats\",\"rememberMe\":null,\"userId\":0,\"requestList\":null,\"transactions\":null,\"txnlocations\":null}"));
+                osw.write(String.format("{\"loggedIn\":false,\"password\":\""+ passwordintext +"\",\"username\":\""+ usernameintext +"\",\"rememberMe\":null,\"userId\":0,\"requestList\":null,\"transactions\":null,\"txnlocations\":null}"));
                 osw.flush();
                 osw.close();
                 InputStream stream = connection.getInputStream();
