@@ -7,16 +7,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpPut;
-import org.apache.http.entity.StringEntity;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -34,6 +26,8 @@ public class login_activity extends AppCompatActivity {
     EditText password;
     String passwordintext;
     String usernameintext;
+    Boolean loginState =false;
+    String outputresponse;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,15 +44,7 @@ public class login_activity extends AppCompatActivity {
         passwordintext = password.getText().toString();
         usernameintext = username.getText().toString();
         new LongOperation().execute("");
-        /*if(!(username.getText().toString().equals("admin") && password.getText().toString().equals("admin")))
-        {
-            Intent intent = new Intent(this, ClientSelection_Activity.class);
-            this.startActivity(intent);
-        }
-        else
-        {
-            Toast.makeText(this, "Credentials wrong >.<", Toast.LENGTH_SHORT).show();
-        }*/
+
     }
 
 
@@ -68,7 +54,7 @@ public class login_activity extends AppCompatActivity {
         protected String doInBackground(String... params) {
 
             try {
-                URL url = new URL("http://58.68.16.118:8080/flow/rest/login");
+                URL url = new URL("http://remote.uds.in:8081/flow/rest/login");
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 connection.setRequestMethod("PUT");
                 connection.setDoOutput(true);
@@ -80,8 +66,10 @@ public class login_activity extends AppCompatActivity {
                 InputStream stream = connection.getInputStream();
                 InputStreamReader isReader = new InputStreamReader(stream );
                 BufferedReader br = new BufferedReader(isReader );
-                System.err.println(connection.getResponseCode() + connection.getResponseMessage());
-                Log.d("vishnugt", connection.getResponseMessage() + connection.getResponseCode() + br.readLine());
+                //System.err.println(connection.getResponseCode() + connection.getResponseMessage());
+                //Log.d("vishnugt", connection.getResponseMessage() + connection.getResponseCode() );
+                outputresponse = br.readLine();
+                //Log.e("asdf", outputresponse);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -95,16 +83,38 @@ public class login_activity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String result) {
         Log.d("result", result);
-            Toast.makeText(getApplicationContext(), "execction complete", Toast.LENGTH_SHORT).show();
+
+            if(outputresponse.toCharArray()[12]=='t')
+            {
+                //Log.d("someshit", outputresponse.toString());
+                loginState=true;
+            }
+            //Toast.makeText(getApplicationContext(), "execction complete", Toast.LENGTH_SHORT).show();
+            aftercomplete();
         }
 
         @Override
         protected void onPreExecute() {
-            Toast.makeText(getApplicationContext(), "execction started", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(getApplicationContext(), "execction started", Toast.LENGTH_SHORT).show();
 
         }
 
         @Override
         protected void onProgressUpdate(Void... values) {}
+    }
+
+    public void aftercomplete()
+    {
+        if(loginState)
+        {
+            Toast.makeText(getApplicationContext(), "User logged in", Toast.LENGTH_SHORT).show();
+            loginState=false;
+            Intent intent = new Intent(this, ClientSelection_Activity.class);
+            this.startActivity(intent);
+        }
+        else
+        {
+            Toast.makeText(this, "Credentials wrong >.<", Toast.LENGTH_SHORT).show();
+        }
     }
 }
