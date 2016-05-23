@@ -4,6 +4,9 @@ import android.content.DialogInterface;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AlertDialog;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 import android.support.v7.widget.LinearLayoutManager;
@@ -12,7 +15,7 @@ import android.util.Log;
 
 import java.util.ArrayList;
 
-public class ClientSelection_Activity extends ActionBarActivity {
+public class ClientSelection_Activity extends AppCompatActivity {
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
@@ -21,11 +24,12 @@ public class ClientSelection_Activity extends ActionBarActivity {
     AlertDialog alertDialog;
     ArrayList<String> company=new ArrayList<String>();
     String username;
-
+    Menu menus;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_card_view);
+
 
         username=getIntent().getExtras().getString("uname");
         Toast.makeText(this,"Welcome "+username,Toast.LENGTH_SHORT).show();
@@ -39,6 +43,22 @@ public class ClientSelection_Activity extends ActionBarActivity {
         mRecyclerView.setAdapter(mAdapter);
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        menu.getItem(0).setTitle(username);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.user) {
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
 
     @Override
     protected void onResume() {
