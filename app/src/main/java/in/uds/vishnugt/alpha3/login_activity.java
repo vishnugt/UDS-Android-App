@@ -47,6 +47,7 @@ public class login_activity extends AppCompatActivity {
     }
 
     private boolean isNetworkConnected() {
+        //Only connecctivity to a network is checked and not the internet access
         ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         return cm.getActiveNetworkInfo() != null;
     }
