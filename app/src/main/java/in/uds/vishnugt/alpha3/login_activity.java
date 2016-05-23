@@ -18,8 +18,10 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -70,11 +72,14 @@ public class login_activity extends AppCompatActivity {
                 connection.setDoOutput(true);
                 connection.setRequestProperty("Content-Type", "application/json");
                 OutputStreamWriter osw = new OutputStreamWriter(connection.getOutputStream());
-                osw.write(String.format("{\"username\":\"cats\",\"password\":\"cats\"}"));
+                osw.write(String.format("{\"loggedIn\":false,\"password\":\"cats\",\"username\":\"cats\",\"rememberMe\":null,\"userId\":0,\"requestList\":null,\"transactions\":null,\"txnlocations\":null}"));
                 osw.flush();
                 osw.close();
+                InputStream stream = connection.getInputStream();
+                InputStreamReader isReader = new InputStreamReader(stream );
+                BufferedReader br = new BufferedReader(isReader );
                 System.err.println(connection.getResponseCode() + connection.getResponseMessage());
-                Log.d("vishnugt", connection.getResponseMessage() + connection.getResponseCode());
+                Log.d("vishnugt", connection.getResponseMessage() + connection.getResponseCode() + br.readLine());
             } catch (IOException e) {
                 e.printStackTrace();
             }
