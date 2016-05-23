@@ -20,12 +20,15 @@ public class ClientSelection_Activity extends ActionBarActivity {
     ArrayList results;
     AlertDialog alertDialog;
     ArrayList<String> company=new ArrayList<String>();
+    String username;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_card_view);
 
+        username=getIntent().getExtras().getString("uname");
+        Toast.makeText(this,"Welcome "+username,Toast.LENGTH_SHORT).show();
         results = new ArrayList<DataObject>();
         mRecyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
         mRecyclerView.setHasFixedSize(true);

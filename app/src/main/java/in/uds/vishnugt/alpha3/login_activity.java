@@ -107,7 +107,7 @@ public class login_activity extends AppCompatActivity {
     {
         if(loginState)
         {
-            Toast.makeText(getApplicationContext(), "User logged in", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(getApplicationContext(), "User logged in", Toast.LENGTH_SHORT).show();
             loginState=false;
             Intent intent = new Intent(this, ClientSelection_Activity.class);
             intent.putExtra("uname", usernameintext);
