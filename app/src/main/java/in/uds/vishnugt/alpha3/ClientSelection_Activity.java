@@ -1,9 +1,6 @@
 package in.uds.vishnugt.alpha3;
 
-import android.content.Context;
 import android.content.DialogInterface;
-import android.net.ConnectivityManager;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AlertDialog;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -40,7 +37,7 @@ public class ClientSelection_Activity extends AppCompatActivity {
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
         mAdapter = new MyRecyclerViewAdapter(results);
-        Log.e("Error",getDataSet().toString());
+        getDataSet();
         mRecyclerView.setAdapter(mAdapter);
     }
 
@@ -92,7 +89,7 @@ public class ClientSelection_Activity extends AppCompatActivity {
         });
     }
 
-    private ArrayList<DataObject> getDataSet()
+    private void getDataSet()
     {
         for(int index=0;index<20;index++)
         {
@@ -101,6 +98,5 @@ public class ClientSelection_Activity extends AppCompatActivity {
             results.add(index, obj);
             company.add(index,"Some Primary Text "+index);
         }
-        return results;
     }
 }
