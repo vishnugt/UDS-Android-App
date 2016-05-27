@@ -19,7 +19,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
-import java.net.InetAddress;
 import java.net.URL;
 
 //url http://192.168.0.172:8080/flow/rest/login?loggedIn=false&password=%22cat%22&rememberMe=false&requestList=&transactions=&txnlocations=&userId=0&username=%22cats%22
@@ -99,8 +98,20 @@ public class login_activity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String result) {
             Log.d("result", result);
-
-            if(outputresponse.toCharArray()[12]=='t')
+            boolean havepermission=false;
+            int trans=outputresponse.indexOf("transactions");
+            int posstart=outputresponse.indexOf("[",trans);
+            int posend=outputresponse.indexOf("]",trans);
+            posstart++;
+            String permissions = outputresponse.substring(posstart,posend);
+            String[] permission= permissions.split(",");
+            for(String token : permission) {
+                Log.e("Permission",token);
+                if(token.matches("\"CATS\"")==true)
+                    havepermission=true;
+            }
+            Log.e("Permission",""+havepermission);
+            if((outputresponse.toCharArray()[12]=='t')&&(havepermission==true))
             {
                 //Log.d("someshit", outputresponse.toString());
                 loginState=true;
