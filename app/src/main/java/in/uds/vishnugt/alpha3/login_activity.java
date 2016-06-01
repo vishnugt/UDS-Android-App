@@ -98,23 +98,25 @@ public class login_activity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String result) {
             Log.d("result", result);
-            boolean havepermission=false;
-            int trans=outputresponse.indexOf("transactions");
-            int posstart=outputresponse.indexOf("[",trans);
-            int posend=outputresponse.indexOf("]",trans);
-            posstart++;
-            String permissions = outputresponse.substring(posstart,posend);
-            String[] permission= permissions.split(",");
-            for(String token : permission) {
-                Log.e("Permission",token);
-                if(token.matches("\"CATS\"")==true)
-                    havepermission=true;
-            }
-            Log.e("Permission",""+havepermission);
-            if((outputresponse.toCharArray()[12]=='t')&&(havepermission==true))
-            {
-                //Log.d("someshit", outputresponse.toString());
-                loginState=true;
+            Log.e("JSON",outputresponse);
+            if(outputresponse.toCharArray()[12]=='t') {
+                boolean havepermission = false;
+                int trans = outputresponse.indexOf("transactions");
+                int posstart = outputresponse.indexOf("[", trans);
+                int posend = outputresponse.indexOf("]", trans);
+                posstart++;
+                String permissions = outputresponse.substring(posstart, posend);
+                String[] permission = permissions.split(",");
+                for (String token : permission) {
+                    Log.e("Permission", token);
+                    if (token.matches("\"CATS\"") == true)
+                        havepermission = true;
+                }
+                Log.e("Permission", "" + havepermission);
+                if (havepermission == true) {
+                    //Log.d("someshit", outputresponse.toString());
+                    loginState = true;
+                }
             }
             //Toast.makeText(getApplicationContext(), "execction complete", Toast.LENGTH_SHORT).show();
             aftercomplete();
