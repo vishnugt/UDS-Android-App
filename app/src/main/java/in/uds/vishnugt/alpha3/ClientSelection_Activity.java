@@ -21,15 +21,11 @@ import org.json.JSONObject;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
-import java.util.zip.GZIPInputStream;
 
 public class ClientSelection_Activity extends AppCompatActivity {
     private RecyclerView mRecyclerView;
@@ -48,7 +44,7 @@ public class ClientSelection_Activity extends AppCompatActivity {
         setTitle("Client Selection");
         username=getIntent().getExtras().getString("uname");
         Toast.makeText(this,"Welcome "+username,Toast.LENGTH_SHORT).show();
-        results = new ArrayList<DataObject>();
+        results = new ArrayList<>();
         mRecyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
         mRecyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(this);
@@ -109,7 +105,7 @@ public class ClientSelection_Activity extends AppCompatActivity {
 
     private void getDataSet(String jsonarray)
     {
-        JSONObject  jsonRootObject = null;
+        JSONObject  jsonRootObject;
         try {
             jsonarray="{\"Clients\":"+jsonarray+"}";
             Log.e("Clients",jsonarray);
@@ -143,7 +139,7 @@ public class ClientSelection_Activity extends AppCompatActivity {
 
             try {
                 URL url = new URL("http://remote.uds.in:8081/xtime/client/details/'UDS200016950001','UDS200016960002'");
-                urlConnection = (HttpURLConnection) url.openConnection();
+                urlConnection = url.openConnection();
                 InputStream in = new BufferedInputStream(urlConnection.getInputStream());
                 BufferedReader reader = new BufferedReader(new InputStreamReader(in));
                 String line;
