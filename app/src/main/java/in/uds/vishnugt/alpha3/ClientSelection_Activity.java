@@ -16,6 +16,7 @@ import android.util.Log;
 
 import org.apache.http.util.ByteArrayBuffer;
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedInputStream;
@@ -39,7 +40,6 @@ public class ClientSelection_Activity extends AppCompatActivity {
     AlertDialog alertDialog;
     ArrayList<String> company=new ArrayList<String>();
     String username;
-    Menu menus;
     ProgressDialog progress;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -107,15 +107,29 @@ public class ClientSelection_Activity extends AppCompatActivity {
         });
     }
 
-    private void getDataSet()
+    private void getDataSet(String json)
     {
-        for(int index=0;index<20;index++)
-        {
-            DataObject obj = new DataObject("Some Primary Text " + index,
-                    "Secondary " + index);
-            results.add(index, obj);
-            company.add(index,"Some Primary Text "+index);
+        JSONObject  jsonRootObject = null;
+        try {
+            String jsonarray="[{\"wbsId\":\"UDS200016950001\",\"wbsDesc\":\"THE BOSE STORE - MUMBAI - SE\",\"startDate\":null,\"endDate\":null,\"status\":null,\"pareaId\":null,\"networkId\":null,\"activitySet\":null,\"projectId\":null},{\"wbsId\":\"UDS200016960002\",\"wbsDesc\":\"CLOSED I3 SOFTWARE PVT LTD - HYDERABAD -\",\"startDate\":null,\"endDate\":null,\"status\":null,\"pareaId\":null,\"networkId\":null,\"activitySet\":null,\"projectId\":null}]";
+            jsonarray="{\"Clients\":"+jsonarray+"}";
+            Log.e("Clients",jsonarray);
+            jsonRootObject = new JSONObject(jsonarray);
+            JSONArray jsonArray = jsonRootObject.optJSONArray("Clients");
+            String name;
+            //Iterate the jsonArray and print the info of JSONObjects
+            for(int i=0; i < jsonArray.length(); i++) {
+                JSONObject jsonObject = jsonArray.getJSONObject(i);
+                name = jsonObject.optString("wbsDesc").toString();
+                String names[]=name.split("-");
+                DataObject obj = new DataObject(names[1], names[0]);
+                results.add(i, obj);
+                company.add(i, names[0]);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
+
     }
 
 
@@ -129,7 +143,7 @@ public class ClientSelection_Activity extends AppCompatActivity {
             StringBuilder result = new StringBuilder();
 
             try {
-                URL url = new URL("https://api.github.com/users/dmnugent80/repos");
+                URL url = new URL("http://remote.uds.in:8081/flow/rest/login");
                 urlConnection = (HttpURLConnection) url.openConnection();
                 InputStream in = new BufferedInputStream(urlConnection.getInputStream());
                 BufferedReader reader = new BufferedReader(new InputStreamReader(in));
@@ -149,7 +163,7 @@ public class ClientSelection_Activity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String result) {
             Log.d("result", result);
-            getDataSet();
+            getDataSet(result);
             progress.dismiss();
             mRecyclerView.setAdapter(mAdapter);
         }
