@@ -107,11 +107,10 @@ public class ClientSelection_Activity extends AppCompatActivity {
         });
     }
 
-    private void getDataSet(String json)
+    private void getDataSet(String jsonarray)
     {
         JSONObject  jsonRootObject = null;
         try {
-            String jsonarray="[{\"wbsId\":\"UDS200016950001\",\"wbsDesc\":\"THE BOSE STORE - MUMBAI - SE\",\"startDate\":null,\"endDate\":null,\"status\":null,\"pareaId\":null,\"networkId\":null,\"activitySet\":null,\"projectId\":null},{\"wbsId\":\"UDS200016960002\",\"wbsDesc\":\"CLOSED I3 SOFTWARE PVT LTD - HYDERABAD -\",\"startDate\":null,\"endDate\":null,\"status\":null,\"pareaId\":null,\"networkId\":null,\"activitySet\":null,\"projectId\":null}]";
             jsonarray="{\"Clients\":"+jsonarray+"}";
             Log.e("Clients",jsonarray);
             jsonRootObject = new JSONObject(jsonarray);
@@ -143,7 +142,7 @@ public class ClientSelection_Activity extends AppCompatActivity {
             StringBuilder result = new StringBuilder();
 
             try {
-                URL url = new URL("http://remote.uds.in:8081/flow/rest/login");
+                URL url = new URL("http://remote.uds.in:8081/xtime/client/details/'UDS200016950001','UDS200016960002'");
                 urlConnection = (HttpURLConnection) url.openConnection();
                 InputStream in = new BufferedInputStream(urlConnection.getInputStream());
                 BufferedReader reader = new BufferedReader(new InputStreamReader(in));
