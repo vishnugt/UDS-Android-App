@@ -1,13 +1,18 @@
 package in.uds.vishnugt.alpha3;
 
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.AsyncTask;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuItem;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -29,7 +34,7 @@ public class Material_Activity extends AppCompatActivity {
     private RecyclerView.LayoutManager mLayoutManager;
     private static String LOG_TAG = "CardViewActivity";
 
-
+    AlertDialog alertDialog;
     ArrayList results;
     ArrayList<String> materials=new ArrayList<>();
     ProgressDialog progress;
@@ -60,16 +65,43 @@ public class Material_Activity extends AppCompatActivity {
         mRecyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
         mRecyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(this);
-        mRecyclerView.setLayoutManager(mLayoutManager); //have to fill in
+        mRecyclerView.setLayoutManager(mLayoutManager);
 
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
-        menu.getItem(0).setTitle(username);
+        menu.getItem(0).setTitle("SUBMIT");
         return true;
     }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.user:
+                final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+                alertDialogBuilder.setTitle("Are you sure?");
+                alertDialogBuilder.setPositiveButton("yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface arg0, int arg1) {
+                        Toast.makeText(getApplicationContext(), "You clicked yes button", Toast.LENGTH_LONG).show();
+                        }
+                });
+                alertDialogBuilder.setNegativeButton("No",new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        alertDialog.dismiss();
+                    }
+                });
+                alertDialog = alertDialogBuilder.create();
+                alertDialog.show();
+                return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
 
     private class LongOperation extends AsyncTask<String, Void, String> {
         @Override

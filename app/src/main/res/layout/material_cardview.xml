@@ -24,7 +24,6 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceLarge"
                 android:textStyle="italic"
                 android:text=""
                 android:id="@+id/materialname" />
@@ -34,7 +33,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/materialcount"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="5dp"
                 android:hint="Enter material count"/>
         </LinearLayout>
     </android.support.v7.widget.CardView>
