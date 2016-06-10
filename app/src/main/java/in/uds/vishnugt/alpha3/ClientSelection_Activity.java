@@ -35,7 +35,8 @@ public class ClientSelection_Activity extends AppCompatActivity {
     private static String LOG_TAG = "CardViewActivity";
     ArrayList results;
     AlertDialog alertDialog;
-    ArrayList<String> company=new ArrayList<String>();
+    ArrayList<String> company=new ArrayList<>();
+    ArrayList<String> companyid=new ArrayList<>();
     String username;
     ProgressDialog progress;
     @Override
@@ -84,15 +85,20 @@ public class ClientSelection_Activity extends AppCompatActivity {
             @Override
             public void onItemClick(final int position, View v) {
                 Log.i(LOG_TAG, " Clicked on Item " + position);
+                final String scompany,scompanyid;
+                scompany=company.get(position);
+                scompanyid=company.get(position);
                 final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(v.getContext());
                 alertDialogBuilder.setTitle("Confirm Action");
                 alertDialogBuilder.setMessage(company.get(position));
                 alertDialogBuilder.setPositiveButton("yes", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface arg0, int arg1) {
-                        Toast.makeText(ClientSelection_Activity.this, "You clicked yes button for" + position, Toast.LENGTH_LONG).show();
+                        //Toast.makeText(ClientSelection_Activity.this, "You clicked yes button for" + position, Toast.LENGTH_LONG).show();
                         Intent intent = new Intent(getApplicationContext(), Delivery_or_Visit.class);
-                        intent.putExtra("client_id", position);
+                        intent.putExtra("username",username);
+                        intent.putExtra("company",scompany);
+                        intent.putExtra("companyid",scompanyid);
                         startActivity(intent);
 
                     }
@@ -124,6 +130,7 @@ public class ClientSelection_Activity extends AppCompatActivity {
                 DataObject obj = new DataObject(names[1], names[0]);
                 results.add(i, obj);
                 company.add(i, names[0]);
+                companyid.add(i,names[1]);
             }
         } catch (JSONException e) {
             e.printStackTrace();

@@ -12,18 +12,19 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Materials Delivery"
+        android:text="  Materials Delivery  "
         android:onClick="material_delivery_btn_function"
         android:id="@+id/button2"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="102dp" />
+        android:background="#9E9E9E"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Supervisor Visit"
+        android:text="  Supervisor Visit  "
         android:id="@+id/button3"
+        android:background="#9E9E9E"
         android:layout_marginBottom="128dp"
         android:layout_alignParentBottom="true"
         android:layout_alignLeft="@+id/button2"
