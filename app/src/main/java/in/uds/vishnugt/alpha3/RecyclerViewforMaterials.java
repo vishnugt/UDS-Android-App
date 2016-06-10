@@ -9,27 +9,28 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 
-public class MyRecyclerViewAdapter extends RecyclerView
-        .Adapter<MyRecyclerViewAdapter
+public class RecyclerViewforMaterials extends RecyclerView
+        .Adapter<RecyclerViewforMaterials
         .DataObjectHolder> {
-    private static String LOG_TAG = "MyRecyclerViewAdapter";
+    private static String LOG_TAG = "RecyclerViewforMaterials";
     private ArrayList<DataObject> mDataset;
     private static MyClickListener myClickListener;
 
     public static class DataObjectHolder extends RecyclerView.ViewHolder
             implements View
             .OnClickListener {
-        TextView label;
-        TextView dateTime;
+        TextView materialname;
+        EditText materialcount;
 
         public DataObjectHolder(View itemView) {
             super(itemView);
-            label = (TextView) itemView.findViewById(R.id.textView);
-            dateTime = (TextView) itemView.findViewById(R.id.textView2);
+            materialname = (TextView) itemView.findViewById(R.id.materialname);
+            materialcount = (EditText) itemView.findViewById(R.id.materialcount);
             Log.i(LOG_TAG, "Adding Listener");
             itemView.setOnClickListener(this);
         }
@@ -44,7 +45,7 @@ public class MyRecyclerViewAdapter extends RecyclerView
         this.myClickListener = myClickListener;
     }
 
-    public MyRecyclerViewAdapter(ArrayList<DataObject> myDataset) {
+    public RecyclerViewforMaterials(ArrayList<DataObject> myDataset) {
         mDataset = myDataset;
     }
 
@@ -52,7 +53,7 @@ public class MyRecyclerViewAdapter extends RecyclerView
     public DataObjectHolder onCreateViewHolder(ViewGroup parent,
                                                int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.material_cardview, parent, false);
+                .inflate(R.layout.card_view_row, parent, false);
 
         DataObjectHolder dataObjectHolder = new DataObjectHolder(view);
         return dataObjectHolder;
@@ -60,8 +61,8 @@ public class MyRecyclerViewAdapter extends RecyclerView
 
     @Override
     public void onBindViewHolder(DataObjectHolder holder, int position) {
-        holder.label.setText(mDataset.get(position).getmText1());
-        holder.dateTime.setText(mDataset.get(position).getmText2());
+        holder.materialname.setText(mDataset.get(position).getmText1());
+        //holder.dateTime.setText(mDataset.get(position).getmText2());
     }
 
     public void addItem(DataObject dataObj, int index) {

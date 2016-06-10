@@ -4,6 +4,8 @@ import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Menu;
 
@@ -22,6 +24,13 @@ import java.util.ArrayList;
 public class Material_Activity extends AppCompatActivity {
 
 
+    private RecyclerView mRecyclerView;
+    private RecyclerView.Adapter mAdapter;
+    private RecyclerView.LayoutManager mLayoutManager;
+    private static String LOG_TAG = "CardViewActivity";
+
+
+    ArrayList results;
     ArrayList<String> materials=new ArrayList<>();
     ProgressDialog progress;
     Bundle extras;
@@ -31,7 +40,7 @@ public class Material_Activity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.layout_material);
+        setContentView(R.layout.activity_card_view);
 
         extras=getIntent().getExtras();
         username=extras.getString("username");
@@ -45,6 +54,15 @@ public class Material_Activity extends AppCompatActivity {
         progress.setMessage("Wait while loading...");
         progress.setCancelable(false);
         progress.show();
+
+
+        results = new ArrayList<>();
+        mRecyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
+        mRecyclerView.setHasFixedSize(true);
+        mLayoutManager = new LinearLayoutManager(this);
+        mRecyclerView.setLayoutManager(mLayoutManager);
+        mAdapter = new RecyclerViewforMaterials(results); //have to fill in
+
     }
 
     @Override
@@ -84,7 +102,7 @@ public class Material_Activity extends AppCompatActivity {
             Log.d("result", result);
             getDataSet(result);
             progress.dismiss();
-            //mRecyclerView.setAdapter(mAdapter);
+            mRecyclerView.setAdapter(mAdapter);
         }
 
         @Override
@@ -111,6 +129,8 @@ public class Material_Activity extends AppCompatActivity {
                 name = jsonObject.optString("materialDesc").toString();
                 Log.d("materials", name);
                 materials.add(i,name);
+                results.add(i, name);
+                DataObject obj = new DataObject(name, "");
             }
         } catch (JSONException e) {
             e.printStackTrace();
