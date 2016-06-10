@@ -2,6 +2,7 @@ package in.uds.vishnugt.alpha3;
 
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AlertDialog;
 import android.os.Bundle;
@@ -81,7 +82,7 @@ public class ClientSelection_Activity extends AppCompatActivity {
         ((MyRecyclerViewAdapter) mAdapter).setOnItemClickListener(new MyRecyclerViewAdapter
                 .MyClickListener() {
             @Override
-            public void onItemClick(int position, View v) {
+            public void onItemClick(final int position, View v) {
                 Log.i(LOG_TAG, " Clicked on Item " + position);
                 final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(v.getContext());
                 alertDialogBuilder.setTitle("Confirm Action");
@@ -89,7 +90,11 @@ public class ClientSelection_Activity extends AppCompatActivity {
                 alertDialogBuilder.setPositiveButton("yes", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface arg0, int arg1) {
-                        Toast.makeText(ClientSelection_Activity.this,"You clicked yes button",Toast.LENGTH_LONG).show();
+                        Toast.makeText(ClientSelection_Activity.this, "You clicked yes button for" + position, Toast.LENGTH_LONG).show();
+                        Intent intent = new Intent(getApplicationContext(), Delivery_or_Visit.class);
+                        intent.putExtra("client_id", position);
+                        startActivity(intent);
+
                     }
                 });
                 alertDialogBuilder.setNegativeButton("No",new DialogInterface.OnClickListener() {
@@ -112,7 +117,6 @@ public class ClientSelection_Activity extends AppCompatActivity {
             jsonRootObject = new JSONObject(jsonarray);
             JSONArray jsonArray = jsonRootObject.optJSONArray("Clients");
             String name;
-            //Iterate the jsonArray and print the info of JSONObjects
             for(int i=0; i < jsonArray.length(); i++) {
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
                 name = jsonObject.optString("wbsDesc").toString();
@@ -124,7 +128,6 @@ public class ClientSelection_Activity extends AppCompatActivity {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
     }
 
 
