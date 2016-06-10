@@ -5,6 +5,7 @@ import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -23,10 +24,19 @@ public class Material_Activity extends AppCompatActivity {
 
     ArrayList<String> materials=new ArrayList<>();
     ProgressDialog progress;
+    Bundle extras;
+    String username;
+    String company;
+    String companyid;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_material);
+
+        extras=getIntent().getExtras();
+        username=extras.getString("username");
+        company=extras.getString("company");
+        companyid=extras.getString("companyid");
 
         new LongOperation().execute("");
 
@@ -35,6 +45,13 @@ public class Material_Activity extends AppCompatActivity {
         progress.setMessage("Wait while loading...");
         progress.setCancelable(false);
         progress.show();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        menu.getItem(0).setTitle(username);
+        return true;
     }
 
     private class LongOperation extends AsyncTask<String, Void, String> {

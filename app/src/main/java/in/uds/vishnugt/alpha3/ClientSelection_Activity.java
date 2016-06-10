@@ -37,6 +37,7 @@ public class ClientSelection_Activity extends AppCompatActivity {
     AlertDialog alertDialog;
     ArrayList<String> company=new ArrayList<>();
     ArrayList<String> companyid=new ArrayList<>();
+    ArrayList<String> location=new ArrayList<>();
     String username;
     ProgressDialog progress;
 
@@ -86,9 +87,10 @@ public class ClientSelection_Activity extends AppCompatActivity {
             @Override
             public void onItemClick(final int position, View v) {
                 Log.i(LOG_TAG, " Clicked on Item " + position);
-                final String scompany,scompanyid;
+                final String scompany,scompanyid,slocation;
                 scompany=company.get(position);
                 scompanyid=company.get(position);
+                slocation=location.get(position);
                 final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(v.getContext());
                 alertDialogBuilder.setTitle("Confirm Action");
                 alertDialogBuilder.setMessage(company.get(position));
@@ -100,6 +102,7 @@ public class ClientSelection_Activity extends AppCompatActivity {
                         intent.putExtra("username",username);
                         intent.putExtra("company",scompany);
                         intent.putExtra("companyid",scompanyid);
+                        intent.putExtra("location",slocation);
                         startActivity(intent);
 
                     }
@@ -123,15 +126,17 @@ public class ClientSelection_Activity extends AppCompatActivity {
             Log.e("Clients",jsonarray);
             jsonRootObject = new JSONObject(jsonarray);
             JSONArray jsonArray = jsonRootObject.optJSONArray("Clients");
-            String name;
+            String name,id;
             for(int i=0; i < jsonArray.length(); i++) {
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
                 name = jsonObject.optString("wbsDesc").toString();
+                id=jsonObject.optString("wbsId").toString();
                 String names[]=name.split("-");
                 DataObject obj = new DataObject(names[1], names[0]);
                 results.add(i, obj);
                 company.add(i, names[0]);
-                companyid.add(i,names[1]);
+                companyid.add(i,id);
+                location.add(i,names[1]);
             }
         } catch (JSONException e) {
             e.printStackTrace();
