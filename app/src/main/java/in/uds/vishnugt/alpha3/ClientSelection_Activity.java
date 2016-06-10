@@ -39,6 +39,7 @@ public class ClientSelection_Activity extends AppCompatActivity {
     ArrayList<String> companyid=new ArrayList<>();
     String username;
     ProgressDialog progress;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
