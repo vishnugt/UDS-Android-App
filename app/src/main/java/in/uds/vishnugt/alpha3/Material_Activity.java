@@ -60,8 +60,7 @@ public class Material_Activity extends AppCompatActivity {
         mRecyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
         mRecyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(this);
-        mRecyclerView.setLayoutManager(mLayoutManager);
-        mAdapter = new RecyclerViewforMaterials(results); //have to fill in
+        mRecyclerView.setLayoutManager(mLayoutManager); //have to fill in
 
     }
 
@@ -102,6 +101,7 @@ public class Material_Activity extends AppCompatActivity {
             Log.d("result", result);
             getDataSet(result);
             progress.dismiss();
+            mAdapter = new RecyclerViewforMaterials(results);
             mRecyclerView.setAdapter(mAdapter);
         }
 
@@ -129,8 +129,8 @@ public class Material_Activity extends AppCompatActivity {
                 name = jsonObject.optString("materialDesc").toString();
                 Log.d("materials", name);
                 materials.add(i,name);
-                results.add(i, name);
-                DataObject obj = new DataObject(name, "");
+                DataObject obj = new DataObject(name.toString(), "");
+                results.add(i, obj);
             }
         } catch (JSONException e) {
             e.printStackTrace();
