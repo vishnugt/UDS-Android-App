@@ -20,7 +20,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".ClientSelection_Activity" />
-        <activity android:name=".Delivery_or_Visit"></activity>
+        <activity android:name=".Delivery_or_Visit" />
+        <activity android:name=".Material_Activity"></activity>
     </application>
 
 </manifest>
