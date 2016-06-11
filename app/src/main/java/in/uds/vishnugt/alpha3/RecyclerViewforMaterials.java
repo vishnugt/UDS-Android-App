@@ -5,6 +5,8 @@ package in.uds.vishnugt.alpha3;
  */
 
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,6 +21,7 @@ public class RecyclerViewforMaterials extends RecyclerView
         .DataObjectHolder> {
     private static String LOG_TAG = "RecyclerViewforMaterials";
     private ArrayList<DataObject> mDataset;
+    public ArrayList<String> countmaterial=new ArrayList<>();
     private static MyClickListener myClickListener;
 
     public static class DataObjectHolder extends RecyclerView.ViewHolder
@@ -60,9 +63,29 @@ public class RecyclerViewforMaterials extends RecyclerView
     }
 
     @Override
-    public void onBindViewHolder(DataObjectHolder holder, int position) {
+    public void onBindViewHolder(DataObjectHolder holder, final int position) {
         holder.materialname.setText(mDataset.get(position).getmText1());
         //holder.dateTime.setText(mDataset.get(position).getmText2());
+        holder.materialcount.addTextChangedListener(new TextWatcher() {
+
+            @Override
+            public void onTextChanged(CharSequence s, int start,
+                                      int before, int count) {
+                //setting data to array, when changed
+                //countmaterial.add(position,"");
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start,
+                                          int count, int after) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                countmaterial.add(position,s.toString());
+            }
+        });
     }
 
     public void addItem(DataObject dataObj, int index) {

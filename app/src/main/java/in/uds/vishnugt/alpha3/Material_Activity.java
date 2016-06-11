@@ -30,7 +30,7 @@ public class Material_Activity extends AppCompatActivity {
 
 
     private RecyclerView mRecyclerView;
-    private RecyclerView.Adapter mAdapter;
+    private RecyclerViewforMaterials mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     private static String LOG_TAG = "CardViewActivity";
 
@@ -81,6 +81,13 @@ public class Material_Activity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.user:
                 final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+                String count;
+                count="";
+                for(int i=0;i<materials.size();i++)
+                {
+                    count=count.concat(materials.get(i)+" - "+mAdapter.countmaterial.get(i).toString()+"\n");
+                }
+                alertDialogBuilder.setMessage(count);
                 alertDialogBuilder.setTitle("Are you sure?");
                 alertDialogBuilder.setPositiveButton("yes", new DialogInterface.OnClickListener() {
                     @Override
