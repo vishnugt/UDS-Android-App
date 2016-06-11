@@ -32,7 +32,6 @@ public class Material_Activity extends AppCompatActivity {
     private RecyclerView mRecyclerView;
     private RecyclerViewforMaterials mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
-    private static String LOG_TAG = "CardViewActivity";
 
     AlertDialog alertDialog;
     ArrayList results;
@@ -85,7 +84,7 @@ public class Material_Activity extends AppCompatActivity {
                 count="";
                 for(int i=0;i<materials.size();i++)
                 {
-                    if(mAdapter.countmaterial.get(i).toString()=="")
+                    if(mAdapter.countmaterial.get(i).toString().matches(""))
                         count=count.concat(materials.get(i)+" - "+"0"+"\n");
                     else
                         count=count.concat(materials.get(i)+" - "+mAdapter.countmaterial.get(i).toString()+"\n");

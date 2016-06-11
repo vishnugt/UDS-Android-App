@@ -81,18 +81,19 @@ public class RecyclerViewforMaterials extends RecyclerView
             public void onTextChanged(CharSequence s, int start,
                                       int before, int count) {
                 //setting data to array, when changed
-                //countmaterial.add(position,"");
+                countmaterial.set(position,s.toString());
             }
 
             @Override
             public void beforeTextChanged(CharSequence s, int start,
                                           int count, int after) {
+                countmaterial.set(position,s.toString());
 
             }
 
             @Override
             public void afterTextChanged(Editable s) {
-                countmaterial.add(position,s.toString());
+                countmaterial.set(position,s.toString());
             }
         });
     }
