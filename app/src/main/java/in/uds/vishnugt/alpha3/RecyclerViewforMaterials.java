@@ -40,7 +40,12 @@ public class RecyclerViewforMaterials extends RecyclerView
 
         @Override
         public void onClick(View v) {
-            myClickListener.onItemClick(getAdapterPosition(), v);
+            myClickListener=new MyClickListener() {
+                @Override
+                public void onItemClick(int position, View v) {
+                    return;
+                }
+            };
         }
     }
 
