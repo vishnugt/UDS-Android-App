@@ -55,6 +55,10 @@ public class RecyclerViewforMaterials extends RecyclerView
 
     public RecyclerViewforMaterials(ArrayList<DataObject> myDataset) {
         mDataset = myDataset;
+        for(int i=0;i<mDataset.size();i++)
+        {
+            countmaterial.add(i,0+"");
+        }
     }
 
     @Override

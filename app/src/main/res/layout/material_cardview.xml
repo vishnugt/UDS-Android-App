@@ -34,6 +34,7 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/materialcount"
                 android:layout_marginTop="5dp"
+                android:inputType="number"
                 android:hint="Enter material count"/>
         </LinearLayout>
     </android.support.v7.widget.CardView>

@@ -85,7 +85,10 @@ public class Material_Activity extends AppCompatActivity {
                 count="";
                 for(int i=0;i<materials.size();i++)
                 {
-                    count=count.concat(materials.get(i)+" - "+mAdapter.countmaterial.get(i).toString()+"\n");
+                    if(mAdapter.countmaterial.get(i).toString()=="")
+                        count=count.concat(materials.get(i)+" - "+"0"+"\n");
+                    else
+                        count=count.concat(materials.get(i)+" - "+mAdapter.countmaterial.get(i).toString()+"\n");
                 }
                 alertDialogBuilder.setMessage(count);
                 alertDialogBuilder.setTitle("Are you sure?");
