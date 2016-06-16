@@ -55,4 +55,13 @@ public class Delivery_or_Visit extends AppCompatActivity {
         intent.putExtra("companyid",companyid);
         startActivity(intent);
     }
+
+    public void feedback(View v)
+    {
+        Intent intent=new Intent(getApplicationContext(),feedback_activity.class);
+        intent.putExtra("username",username);
+        intent.putExtra("company",company);
+        intent.putExtra("companyid",companyid);
+        startActivity(intent);
+    }
 }

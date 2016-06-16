@@ -1,5 +1,17 @@
 <resources>
     <string name="app_name">UDS</string>
     <string name="username"></string>
+    <string-array name="feedback">
+        <item>Very good</item>
+        <item>Good</item>
+        <item>Okay</item>
+        <item>Not Bad</item>
+    </string-array>
+    <string-array name="feedbackres">
+        <item>Exceeds Requirement</item>
+        <item>Meets Requirement</item>
+        <item>Satisfactory</item>
+        <item>Needs improvement</item>
+    </string-array>
 
 </resources>

@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Feedback Form"
+        android:id="@+id/header"
+        android:textStyle="bold"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="1. Attendance:"
+        android:id="@+id/attendance"
+        android:layout_marginTop="20dp"
+        android:gravity="left"
+        android:layout_below="@+id/header"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <Spinner
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/spinattendance"
+        android:gravity="right"
+        android:entries="@array/feedback"
+        android:layout_alignBaseline="@+id/attendance"
+        android:layout_toRightOf="@+id/attendance"
+        android:layout_toEndOf="@+id/attendance" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="2. Grooming:"
+        android:id="@+id/grooming"
+        android:layout_below="@+id/attendance"
+        android:layout_marginTop="15dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <Spinner
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/spingrooming"
+        android:gravity="right"
+        android:entries="@array/feedback"
+        android:layout_alignBaseline="@+id/grooming"
+        android:layout_toRightOf="@+id/grooming"
+        android:layout_toEndOf="@+id/grooming" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="3. Cleanliness:"
+        android:layout_marginTop="15dp"
+        android:id="@+id/cleanliness"
+        android:layout_below="@+id/grooming"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="a) Toilet:"
+        android:id="@+id/toilet"
+        android:layout_below="@+id/cleanliness"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+    <Spinner
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/spintoilet"
+        android:gravity="right"
+        android:entries="@array/feedback"
+        android:layout_alignBaseline="@+id/toilet"
+        android:layout_toRightOf="@+id/toilet"
+        android:layout_toEndOf="@+id/toilet" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="b) Floor:"
+        android:id="@+id/floor"
+        android:layout_below="@+id/toilet"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+    <Spinner
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/spinfloor"
+        android:gravity="right"
+        android:entries="@array/feedback"
+        android:layout_alignBaseline="@+id/floor"
+        android:layout_toRightOf="@+id/floor"
+        android:layout_toEndOf="@+id/floor" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="c) Pantry Room:"
+        android:id="@+id/pantryroom"
+        android:layout_below="@+id/floor"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+    <Spinner
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/spinpantryroom"
+        android:gravity="right"
+        android:entries="@array/feedback"
+        android:layout_alignBaseline="@+id/pantryroom"
+        android:layout_toRightOf="@+id/pantryroom"
+        android:layout_toEndOf="@+id/pantryroom" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="d) Dusting:"
+        android:id="@+id/dusting"
+        android:layout_below="@+id/pantryroom"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+    <Spinner
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/spindusting"
+        android:gravity="right"
+        android:entries="@array/feedback"
+        android:layout_alignBaseline="@+id/dusting"
+        android:layout_toRightOf="@+id/dusting"
+        android:layout_toEndOf="@+id/dusting" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Feedback:"
+        android:id="@+id/feedbackresponse"
+        android:layout_below="@+id/dusting"
+        android:layout_marginTop="15dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <Spinner
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/spinfeedback"
+        android:gravity="right"
+        android:entries="@array/feedbackres"
+        android:layout_alignBaseline="@+id/feedbackresponse"
+        android:layout_toRightOf="@+id/feedbackresponse"
+        android:layout_toEndOf="@+id/feedbackresponse" />
+
+</RelativeLayout>

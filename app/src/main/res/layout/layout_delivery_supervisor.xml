@@ -25,6 +25,7 @@
         android:text="  Supervisor Visit  "
         android:id="@+id/supervisor"
         android:background="#BDBDBD"
+        android:onClick="feedback"
         android:layout_marginBottom="128dp"
         android:layout_alignParentBottom="true"
         android:layout_alignLeft="@+id/material"
