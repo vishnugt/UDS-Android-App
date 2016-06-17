@@ -30,7 +30,8 @@
         <activity
             android:name=".Material_Activity"
             android:screenOrientation="portrait" />
-        <activity android:name=".feedback_activity"></activity>
+        <activity android:name=".feedback_activity" />
+        <activity android:name=".listview_activity"></activity>
     </application>
 
 </manifest>

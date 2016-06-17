@@ -7,8 +7,14 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -17,6 +23,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 
 public class Delivery_or_Visit extends AppCompatActivity {
 
@@ -27,6 +34,9 @@ public class Delivery_or_Visit extends AppCompatActivity {
     String location;
     String cookie;
     TextView companyname,locationname;
+    ListView listview;
+    ArrayAdapter adapter;
+    ArrayList<String> array=new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +45,8 @@ public class Delivery_or_Visit extends AppCompatActivity {
 
         companyname=(TextView)findViewById(R.id.company);
         locationname=(TextView)findViewById(R.id.location);
+        listview=(ListView)findViewById(R.id.listview);
+
 
         Bundle extras=getIntent().getExtras();
         username=extras.getString("username");
@@ -80,6 +92,29 @@ public class Delivery_or_Visit extends AppCompatActivity {
         startActivity(intent);
     }
 
+
+    public void jsonparse()
+    {
+        JSONObject jsonRootObject,jsonobj;
+        String jsonobject=outputresponse;
+        try {
+            Log.e("Request List",jsonobject);
+            jsonRootObject = new JSONObject(jsonobject);
+            String statusdate;
+            JSONArray jsonarray=jsonRootObject.optJSONArray("requestList");
+            for(int i=0;i<jsonarray.length();i++)
+            {
+                statusdate="";
+                jsonobj=jsonarray.getJSONObject(i);
+                statusdate=statusdate.concat(jsonobj.getString("status"));
+                statusdate=statusdate.concat(" : "+jsonobj.getString("timestamp"));
+                array.add(i,statusdate);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
     private class LongOperation extends AsyncTask<String, Void, String> {
 
         @Override
@@ -115,7 +150,12 @@ public class Delivery_or_Visit extends AppCompatActivity {
         protected void onPostExecute(String result) {
             Log.d("result", result);
             Log.e("JSON",outputresponse);
-            Toast.makeText(getApplicationContext(), outputresponse, Toast.LENGTH_LONG).show();
+            //Toast.makeText(getApplicationContext(), outputresponse, Toast.LENGTH_LONG).show();
+            jsonparse();
+
+            adapter=new ArrayAdapter(getApplicationContext(),R.layout.activity_listview_activity,array);
+
+            listview.setAdapter(adapter);
         }
 
         @Override
