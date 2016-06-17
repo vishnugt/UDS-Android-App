@@ -16,8 +16,9 @@
         android:onClick="materialdelivery"
         android:id="@+id/material"
         android:background="#BDBDBD"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_above="@+id/supervisor"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="28dp" />
 
     <Button
         android:layout_width="wrap_content"
@@ -26,31 +27,38 @@
         android:id="@+id/supervisor"
         android:background="#BDBDBD"
         android:onClick="feedback"
-        android:layout_marginBottom="128dp"
+        android:layout_marginBottom="30dp"
         android:layout_alignParentBottom="true"
-        android:layout_alignLeft="@+id/material"
-        android:layout_alignStart="@+id/material"
-        android:layout_alignRight="@+id/material"
-        android:layout_alignEnd="@+id/material" />
+        android:layout_centerHorizontal="true" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text=""
+        android:text="Title"
         android:textStyle="bold"
         android:id="@+id/company"
+        android:layout_marginTop="15dp"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="33dp" />
+        android:layout_centerHorizontal="true" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text=""
+        android:text="Sub-Title"
         android:id="@+id/location"
+        android:layout_marginTop="25dp"
         android:layout_below="@+id/company"
+        android:layout_centerHorizontal="true" />
+
+    <ListView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/listview"
+        android:layout_below="@+id/location"
+        android:layout_above="@+id/material"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="32dp" />
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="15dp"/>
 </RelativeLayout>

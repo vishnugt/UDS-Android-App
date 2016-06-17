@@ -39,14 +39,20 @@ public class ClientSelection_Activity extends AppCompatActivity {
     ArrayList<String> companyid=new ArrayList<>();
     ArrayList<String> location=new ArrayList<>();
     String username;
+    String cookie;
     ProgressDialog progress;
+    Bundle extras;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_card_view);
         setTitle("Client Selection");
-        username=getIntent().getExtras().getString("uname");
+
+        extras=getIntent().getExtras();
+        username=extras.getString("uname");
+        cookie=extras.getString("Cookie");
+
         Toast.makeText(this,"Welcome "+username,Toast.LENGTH_SHORT).show();
         results = new ArrayList<>();
         mRecyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
@@ -103,6 +109,7 @@ public class ClientSelection_Activity extends AppCompatActivity {
                         intent.putExtra("company",scompany);
                         intent.putExtra("companyid",scompanyid);
                         intent.putExtra("location",slocation);
+                        intent.putExtra("Cookie",cookie);
                         startActivity(intent);
 
                     }

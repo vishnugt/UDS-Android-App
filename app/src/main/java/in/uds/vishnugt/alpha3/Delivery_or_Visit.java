@@ -25,6 +25,7 @@ public class Delivery_or_Visit extends AppCompatActivity {
     String outputresponse;
     String companyid;
     String location;
+    String cookie;
     TextView companyname,locationname;
 
     @Override
@@ -40,6 +41,8 @@ public class Delivery_or_Visit extends AppCompatActivity {
         company=extras.getString("company");
         companyid=extras.getString("companyid");
         location=extras.getString("location");
+        cookie=extras.getString("Cookie");
+
 
         companyname.setText(company.trim());
         locationname.setText(location.trim());
@@ -90,7 +93,7 @@ public class Delivery_or_Visit extends AppCompatActivity {
                 connection.setRequestProperty("Content-Type", "application/json");
                 connection.setRequestProperty("Connection", "keep-alive");
                 //connection.setRequestProperty("Content-Type", "application/json");
-                connection.setRequestProperty("Cookie", "JSESSIONID=5803F8F7FCB9E4FC3E7B543E5B64F8D2; _ga=GA1.2.1002082324.1463725136");
+                connection.setRequestProperty("Cookie", cookie);
                 OutputStreamWriter osw = new OutputStreamWriter(connection.getOutputStream());
                 osw.write(String.format("{\"requestFields\":{\"project\":\"ASCENDAS IT PARK - CHENNAI\",\"projectId\":\"\",\"date\":\"\",\"AttnRecdOn\":\"\",\"SalaryDate\":\"\",\"BillingDate\":\"\"},\"requestType\":\"CATS\",\"fullRequest\":true}"));
                 osw.flush();

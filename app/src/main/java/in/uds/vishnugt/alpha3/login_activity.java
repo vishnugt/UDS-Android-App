@@ -18,20 +18,27 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.net.HttpCookie;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.CookieManager;
+import java.util.List;
+import java.util.Map;
 
 //url http://192.168.0.172:8080/flow/rest/login?loggedIn=false&password=%22cat%22&rememberMe=false&requestList=&transactions=&txnlocations=&userId=0&username=%22cats%22
 
 
 public class login_activity extends AppCompatActivity {
     ProgressDialog progress;
+    String cookie;
     EditText username;
     EditText password;
     String passwordintext;
     String usernameintext;
     Boolean loginState =false;
     String outputresponse;
+    CookieManager cookieManager=new CookieManager();
+    static final String COOKIES_HEADER = "Set-Cookie";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,9 +89,30 @@ public class login_activity extends AppCompatActivity {
                 osw.write(String.format("{\"loggedIn\":false,\"password\":\""+ passwordintext +"\",\"username\":\""+ usernameintext +"\",\"rememberMe\":null,\"userId\":0,\"requestList\":null,\"transactions\":null,\"txnlocations\":null}"));
                 osw.flush();
                 osw.close();
+
+
                 InputStream stream = connection.getInputStream();
                 InputStreamReader isReader = new InputStreamReader(stream );
                 BufferedReader br = new BufferedReader(isReader );
+
+
+                Map<String, List<String>> headerFields = connection.getHeaderFields();
+                List<String> cookiesHeader = headerFields.get(COOKIES_HEADER);
+
+                if(cookiesHeader != null)
+                {
+                    for (String cook : cookiesHeader)
+                    {
+                        cookie=cook;
+                        Log.e("Cookie",cookie);
+                        break;
+                        //cookieManager.getCookieStore().add(null, HttpCookie.parse(cookie).get(0));
+                    }
+                }
+
+
+
+
                 //System.err.println(connection.getResponseCode() + connection.getResponseMessage());
                 //Log.d("vishnugt", connection.getResponseMessage() + connection.getResponseCode() );
                 outputresponse = br.readLine();
@@ -109,7 +137,7 @@ public class login_activity extends AppCompatActivity {
                 String[] permission = permissions.split(",");
                 for (String token : permission) {
                     Log.e("Permission", token);
-                    if (token.matches("\"CATS\"") == true)
+                    if (token.matches("\"SUPERVISOR\"") == true)
                         havepermission = true;
                 }
                 Log.e("Permission", "" + havepermission);
@@ -143,6 +171,7 @@ public class login_activity extends AppCompatActivity {
             loginState=false;
             Intent intent = new Intent(this, ClientSelection_Activity.class);
             intent.putExtra("uname", usernameintext);
+            intent.putExtra("Cookie",cookie);
             this.startActivity(intent);
         }
         else
