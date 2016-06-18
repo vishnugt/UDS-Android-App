@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -21,6 +22,7 @@ public class feedback_activity extends AppCompatActivity {
     Spinner spinattendance,spingrooming,spintoilet,spinfloor,spinpantryroom,spindusting,spinfeedback;
     ArrayList<String> input=new ArrayList<>();
     AlertDialog alertDialog;
+    EditText comments;
 
 
     @Override
@@ -40,6 +42,7 @@ public class feedback_activity extends AppCompatActivity {
         spinpantryroom=(Spinner)findViewById(R.id.spinpantryroom);
         spindusting=(Spinner)findViewById(R.id.spindusting);
         spinfeedback=(Spinner)findViewById(R.id.spinfeedback);
+        comments=(EditText)findViewById(R.id.comment);
     }
 
     @Override
@@ -60,11 +63,12 @@ public class feedback_activity extends AppCompatActivity {
                 input.add(4, spinpantryroom.getSelectedItem().toString());
                 input.add(5, spindusting.getSelectedItem().toString());
                 input.add(6, spinfeedback.getSelectedItem().toString());
+                input.add(7, comments.getText().toString());
 
                 final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
                 String count;
                 count = "";
-                for (int i = 0; i < 7; i++) {
+                for (int i = 0; i < 8; i++) {
                     count = count.concat(input.get(i) + "\n");
                 }
                 alertDialogBuilder.setMessage(count);
