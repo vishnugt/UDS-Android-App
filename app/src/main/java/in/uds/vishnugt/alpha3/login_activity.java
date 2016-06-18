@@ -170,26 +170,6 @@ public class login_activity extends AppCompatActivity {
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-            /*if(outputresponse.toCharArray()[12]=='t') {
-                boolean havepermission = false;
-                int trans = outputresponse.indexOf("transactions");
-                int posstart = outputresponse.indexOf("[", trans);
-                int posend = outputresponse.indexOf("]", trans);
-                posstart++;
-                String permissions = outputresponse.substring(posstart, posend);
-                String[] permission = permissions.split(",");
-                for (String token : permission) {
-                    Log.e("Permission", token);
-                    if (token.matches("\"SUPERVISOR\"") == true)
-                        havepermission = true;
-                }
-                Log.e("Permission", "" + havepermission);
-                if (havepermission == true) {
-                    //Log.d("someshit", outputresponse.toString());
-                    havepermission = true;
-                }*/
-            //}
-            //Toast.makeText(getApplicationContext(), "execction complete", Toast.LENGTH_SHORT).show();
         }
 
         @Override

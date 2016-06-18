@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
@@ -69,9 +70,21 @@ public class Delivery_or_Visit extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        menu.getItem(0).setTitle(username);
+        getMenuInflater().inflate(R.menu.refreshmenu, menu);
+        menu.getItem(1).setTitle(username);
         return true;
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.user:
+                return true;
+            case R.id.refresh:
+                new LongOperation().execute("");
+                Toast.makeText(getApplicationContext(),"Refresh",Toast.LENGTH_SHORT).show();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     public void materialdelivery(View v)
@@ -151,10 +164,9 @@ public class Delivery_or_Visit extends AppCompatActivity {
             Log.d("result", result);
             Log.e("JSON",outputresponse);
             //Toast.makeText(getApplicationContext(), outputresponse, Toast.LENGTH_LONG).show();
+            array.clear();
             jsonparse();
-
             adapter=new ArrayAdapter(getApplicationContext(),R.layout.activity_listview_activity,array);
-
             listview.setAdapter(adapter);
         }
 
