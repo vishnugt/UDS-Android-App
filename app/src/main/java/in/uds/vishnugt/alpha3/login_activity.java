@@ -16,6 +16,10 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -39,7 +43,8 @@ public class login_activity extends AppCompatActivity {
     CheckBox show;
     String passwordintext;
     String usernameintext;
-    Boolean loginState =false;
+    Boolean havepermission =false;
+    Boolean haveaccess=false;
     String outputresponse;
     CookieManager cookieManager=new CookieManager();
     static final String COOKIES_HEADER = "Set-Cookie";
@@ -62,6 +67,8 @@ public class login_activity extends AppCompatActivity {
 
     public void signin(View v)
     {
+        username.setError(null);
+        password.setError(null);
         if(!isNetworkConnected())
         {
             Toast.makeText(this,"No Network Available", Toast.LENGTH_SHORT).show();
@@ -140,7 +147,30 @@ public class login_activity extends AppCompatActivity {
         protected void onPostExecute(String result) {
             Log.d("result", result);
             Log.e("JSON",outputresponse);
-            if(outputresponse.toCharArray()[12]=='t') {
+            JSONObject jsonRootObject;
+            String jsonobject=outputresponse;
+            try {
+                Log.e("Login Response",jsonobject);
+                jsonRootObject = new JSONObject(jsonobject);
+                Log.e("loggedIn",jsonRootObject.getString("loggedIn"));
+                if(jsonRootObject.getString("loggedIn").equals("true"))
+                {
+                    havepermission=true;
+                    JSONArray jsonarray = jsonRootObject.optJSONArray("transactions");
+                    for (int i = 0; i < jsonarray.length(); i++) {
+                        Log.e("transactions",jsonarray.get(i).toString());
+                        if(jsonarray.get(i).equals("SUPERVISOR"))
+                        {
+                            haveaccess=true;
+                            break;
+                        }
+                    }
+                }
+                aftercomplete();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            /*if(outputresponse.toCharArray()[12]=='t') {
                 boolean havepermission = false;
                 int trans = outputresponse.indexOf("transactions");
                 int posstart = outputresponse.indexOf("[", trans);
@@ -156,11 +186,10 @@ public class login_activity extends AppCompatActivity {
                 Log.e("Permission", "" + havepermission);
                 if (havepermission == true) {
                     //Log.d("someshit", outputresponse.toString());
-                    loginState = true;
-                }
-            }
+                    havepermission = true;
+                }*/
+            //}
             //Toast.makeText(getApplicationContext(), "execction complete", Toast.LENGTH_SHORT).show();
-            aftercomplete();
         }
 
         @Override
@@ -178,10 +207,11 @@ public class login_activity extends AppCompatActivity {
     public void aftercomplete()
     {
         progress.dismiss();
-        if(loginState)
+        if(havepermission&&haveaccess)
         {
             //Toast.makeText(getApplicationContext(), "User logged in", Toast.LENGTH_SHORT).show();
-            loginState=false;
+            havepermission=false;
+            haveaccess=false;
             Intent intent = new Intent(this, ClientSelection_Activity.class);
             intent.putExtra("uname", usernameintext);
             intent.putExtra("Cookie",cookie);
@@ -189,8 +219,11 @@ public class login_activity extends AppCompatActivity {
         }
         else
         {
-            //password.getBackground().setColorFilter(getResources().getColor(R.color.errorred), PorterDuff.Mode.SRC_ATOP);
-            password.setError("Wrong Password");
+            if(havepermission)
+                username.setError("Access Denied");
+            else
+                password.setError("Wrong Password");
+            havepermission=false;
             //Toast.makeText(this, "Credentials wrong >.<", Toast.LENGTH_SHORT).show();
         }
     }
