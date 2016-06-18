@@ -3,12 +3,15 @@ package in.uds.vishnugt.alpha3;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.PorterDuff;
 import android.net.ConnectivityManager;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -33,6 +36,7 @@ public class login_activity extends AppCompatActivity {
     String cookie;
     EditText username;
     EditText password;
+    CheckBox show;
     String passwordintext;
     String usernameintext;
     Boolean loginState =false;
@@ -47,6 +51,7 @@ public class login_activity extends AppCompatActivity {
 
         username = (EditText) findViewById(R.id.username);
         password = (EditText) findViewById(R.id.password);
+        show=(CheckBox)findViewById(R.id.showpassword);
     }
 
     private boolean isNetworkConnected() {
@@ -71,6 +76,14 @@ public class login_activity extends AppCompatActivity {
         usernameintext = username.getText().toString();
         new LongOperation().execute("");
 
+    }
+
+    public void showpassword(View v)
+    {
+        if(show.isChecked())
+            password.setTransformationMethod(null);
+        else
+            password.setTransformationMethod(new PasswordTransformationMethod());
     }
 
 
@@ -176,7 +189,9 @@ public class login_activity extends AppCompatActivity {
         }
         else
         {
-            Toast.makeText(this, "Credentials wrong >.<", Toast.LENGTH_SHORT).show();
+            //password.getBackground().setColorFilter(getResources().getColor(R.color.errorred), PorterDuff.Mode.SRC_ATOP);
+            password.setError("Wrong Password");
+            //Toast.makeText(this, "Credentials wrong >.<", Toast.LENGTH_SHORT).show();
         }
     }
 }
