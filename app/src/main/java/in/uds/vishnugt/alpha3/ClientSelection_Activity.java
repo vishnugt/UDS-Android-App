@@ -38,6 +38,7 @@ public class ClientSelection_Activity extends AppCompatActivity {
     ArrayList<String> company=new ArrayList<>();
     ArrayList<String> companyid=new ArrayList<>();
     ArrayList<String> location=new ArrayList<>();
+    ArrayList<String> projectIds = new ArrayList<>();
     String username;
     String cookie;
     ProgressDialog progress;
@@ -52,6 +53,8 @@ public class ClientSelection_Activity extends AppCompatActivity {
         extras=getIntent().getExtras();
         username=extras.getString("uname");
         cookie=extras.getString("Cookie");
+        projectIds = extras.getStringArrayList("projectIds");
+
 
         Toast.makeText(this,"Welcome "+username,Toast.LENGTH_SHORT).show();
         results = new ArrayList<>();
@@ -157,11 +160,19 @@ public class ClientSelection_Activity extends AppCompatActivity {
         @Override
         protected String doInBackground(String... params) {
 
+
             URLConnection urlConnection;
             StringBuilder result = new StringBuilder();
 
             try {
-                URL url = new URL("http://remote.uds.in:8081/xtime/client/details/'UDS200016950001','UDS200016960002'");
+                String urlpart= "";
+                for (String temp : projectIds)
+                {
+                    urlpart = urlpart.concat("'" + temp + "',");
+                }
+                urlpart = urlpart.substring(0, urlpart.length()-1);
+                URL url = new URL("http://remote.uds.in:8081/xtime/client/details/" + urlpart);
+                Log.e("urlcheck", url.toString());
                 urlConnection = url.openConnection();
                 InputStream in = new BufferedInputStream(urlConnection.getInputStream());
                 BufferedReader reader = new BufferedReader(new InputStreamReader(in));

@@ -29,6 +29,7 @@ import java.net.HttpCookie;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.CookieManager;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -46,6 +47,7 @@ public class login_activity extends AppCompatActivity {
     Boolean havepermission =false;
     Boolean haveaccess=false;
     String outputresponse;
+    ArrayList<String> projectIds = new ArrayList<>();
     CookieManager cookieManager=new CookieManager();
     static final String COOKIES_HEADER = "Set-Cookie";
 
@@ -147,7 +149,7 @@ public class login_activity extends AppCompatActivity {
         protected void onPostExecute(String result) {
             Log.d("result", result);
             Log.e("JSON",outputresponse);
-            JSONObject jsonRootObject;
+            JSONObject jsonRootObject, projectIdjson;
             String jsonobject=outputresponse;
             try {
                 Log.e("Login Response",jsonobject);
@@ -159,12 +161,24 @@ public class login_activity extends AppCompatActivity {
                     JSONArray jsonarray = jsonRootObject.optJSONArray("transactions");
                     for (int i = 0; i < jsonarray.length(); i++) {
                         Log.e("transactions",jsonarray.get(i).toString());
-                        if(jsonarray.get(i).equals("SUPERVISOR"))
+                        if(jsonarray.get(i).equals("CATS"))
                         {
                             haveaccess=true;
                             break;
                         }
                     }
+                    projectIdjson = jsonRootObject.getJSONObject("projectIdMap");
+                    //Log.e("projectIdmap", projectIdjson.toString());
+
+                    if(haveaccess)
+                    {
+                        JSONArray supervisorJSONArray = projectIdjson.getJSONArray("CATS");
+                        for(int i=0; i<supervisorJSONArray.length(); i++)
+                        {
+                            projectIds.add(i, supervisorJSONArray.getString(i));
+                        }
+                    }
+
                 }
                 aftercomplete();
             } catch (JSONException e) {
@@ -195,6 +209,7 @@ public class login_activity extends AppCompatActivity {
             Intent intent = new Intent(this, ClientSelection_Activity.class);
             intent.putExtra("uname", usernameintext);
             intent.putExtra("Cookie",cookie);
+            intent.putExtra("projectIds", projectIds);
             this.startActivity(intent);
         }
         else
