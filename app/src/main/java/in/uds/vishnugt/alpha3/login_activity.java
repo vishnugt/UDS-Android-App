@@ -161,7 +161,7 @@ public class login_activity extends AppCompatActivity {
                     JSONArray jsonarray = jsonRootObject.optJSONArray("transactions");
                     for (int i = 0; i < jsonarray.length(); i++) {
                         Log.e("transactions",jsonarray.get(i).toString());
-                        if(jsonarray.get(i).equals("CATS"))
+                        if(jsonarray.get(i).equals("SUPERVISOR"))
                         {
                             haveaccess=true;
                             break;
@@ -172,7 +172,7 @@ public class login_activity extends AppCompatActivity {
 
                     if(haveaccess)
                     {
-                        JSONArray supervisorJSONArray = projectIdjson.getJSONArray("CATS");
+                        JSONArray supervisorJSONArray = projectIdjson.getJSONArray("SUPERVISOR");
                         for(int i=0; i<supervisorJSONArray.length(); i++)
                         {
                             projectIds.add(i, supervisorJSONArray.getString(i));
