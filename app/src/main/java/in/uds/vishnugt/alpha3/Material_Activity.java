@@ -12,6 +12,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
 import org.json.JSONArray;
@@ -20,11 +21,15 @@ import org.json.JSONObject;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class Material_Activity extends AppCompatActivity {
 
@@ -41,6 +46,9 @@ public class Material_Activity extends AppCompatActivity {
     String username;
     String company;
     String companyid;
+    String desc;
+    String cookie;
+    String outputresponse;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,6 +58,8 @@ public class Material_Activity extends AppCompatActivity {
         username=extras.getString("username");
         company=extras.getString("company");
         companyid=extras.getString("companyid");
+        cookie=extras.getString("cookie");
+        desc=extras.getString("description");
 
         new LongOperation().execute("");
 
@@ -95,6 +105,7 @@ public class Material_Activity extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface arg0, int arg1) {
                         Toast.makeText(getApplicationContext(), "You clicked yes button", Toast.LENGTH_LONG).show();
+                        new LongOperationsubmit().execute("");
                         }
                 });
                 alertDialogBuilder.setNegativeButton("No",new DialogInterface.OnClickListener() {
@@ -175,6 +186,66 @@ public class Material_Activity extends AppCompatActivity {
             }
         } catch (JSONException e) {
             e.printStackTrace();
+        }
+    }
+
+
+    private class LongOperationsubmit extends AsyncTask<String, Void, String> {
+
+        @Override
+        protected String doInBackground(String... params) {
+
+            try {
+                URL url = new URL("http://remote.uds.in:8081/flow/rest/request");
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                connection.setRequestMethod("POST");
+                connection.setDoOutput(true);
+                connection.setRequestProperty("Content-Type", "application/json");
+                connection.setRequestProperty("Connection", "keep-alive");
+                //connection.setRequestProperty("Content-Type", "application/json");
+                connection.setRequestProperty("Cookie", cookie);
+                OutputStreamWriter osw = new OutputStreamWriter(connection.getOutputStream());
+                String oswrite="{ \"supervisorList\": [ { ";
+                for(int i=0;i<materials.size();i++)
+                {
+                    oswrite=oswrite.concat("\"material"+(i+1)+"\": \""+mAdapter.countmaterial.get(i).toString()+"\",");
+                }
+                oswrite=oswrite.substring(0,oswrite.length()-1);
+                Date today = new Date();
+                String current = today.toString();
+                oswrite=oswrite.concat("} ], \"requestFields\": { \"projectId\": \""+companyid+"\", \"projectDesc\": \""+desc+"\", \"recordcreationdate\": \""+current+"\", \"monthandYear\": \"June 1995\" }, \"requestType\": \"supervisor\", \"fresh\": true, \"status\": \"Visited\", \"changed\": true, \"transitions\": { \"1\": \"Visited\" }, \"editReason\": \"Automated from app\" }");
+                Log.e("JSON sent to the Server",oswrite);
+                osw.write(String.format(oswrite));
+                osw.flush();
+                osw.close();
+                InputStream stream = connection.getInputStream();
+                InputStreamReader isReader = new InputStreamReader(stream );
+                BufferedReader br = new BufferedReader(isReader );
+                //System.err.println(connection.getResponseCode() + connection.getResponseMessage());
+                //Log.d("vishnugt", connection.getResponseMessage() + connection.getResponseCode() );
+                outputresponse = br.readLine();
+                //Log.e("asdf", outputresponse);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return "";
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            Log.d("result", result);
+            Log.e("JSON",outputresponse);
+        }
+
+        @Override
+        protected void onPreExecute() {
+
+            //Toast.makeText(getApplicationContext(), "execction started", Toast.LENGTH_SHORT).show();
+
+        }
+
+        @Override
+        protected void onProgressUpdate(Void... values) {
         }
     }
 

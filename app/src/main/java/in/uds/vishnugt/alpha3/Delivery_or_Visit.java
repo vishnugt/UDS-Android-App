@@ -34,6 +34,7 @@ public class Delivery_or_Visit extends AppCompatActivity {
     String companyid;
     String location;
     String cookie;
+    String desc;
     TextView companyname,locationname;
     ListView listview;
     ArrayAdapter adapter;
@@ -55,7 +56,7 @@ public class Delivery_or_Visit extends AppCompatActivity {
         companyid=extras.getString("companyid");
         location=extras.getString("location");
         cookie=extras.getString("Cookie");
-
+        desc=extras.getString("description");
 
         companyname.setText(company.trim());
         locationname.setText(location.trim());
@@ -63,6 +64,7 @@ public class Delivery_or_Visit extends AppCompatActivity {
         Log.e("company",company);
         Log.e("companyid",companyid);
         Log.e("location",location);
+        Log.e("description",desc);
 
         new LongOperation().execute("");
 
@@ -93,6 +95,8 @@ public class Delivery_or_Visit extends AppCompatActivity {
         intent.putExtra("username",username);
         intent.putExtra("company",company);
         intent.putExtra("companyid",companyid);
+        intent.putExtra("description",desc);
+        intent.putExtra("cookie",cookie);
         startActivity(intent);
     }
 
@@ -102,6 +106,8 @@ public class Delivery_or_Visit extends AppCompatActivity {
         intent.putExtra("username",username);
         intent.putExtra("company",company);
         intent.putExtra("companyid",companyid);
+        intent.putExtra("description",desc);
+        intent.putExtra("cookie",cookie);
         startActivity(intent);
     }
 
@@ -143,7 +149,7 @@ public class Delivery_or_Visit extends AppCompatActivity {
                 //connection.setRequestProperty("Content-Type", "application/json");
                 connection.setRequestProperty("Cookie", cookie);
                 OutputStreamWriter osw = new OutputStreamWriter(connection.getOutputStream());
-                osw.write(String.format("{\"requestFields\":{\"project\":\"ASCENDAS IT PARK - CHENNAI\",\"projectId\":\"\",\"date\":\"\",\"AttnRecdOn\":\"\",\"SalaryDate\":\"\",\"BillingDate\":\"\"},\"requestType\":\"CATS\",\"fullRequest\":true}"));
+                osw.write(String.format("{\"requestFields\":{\"project\":\"\",\"projectId\":\""+companyid+"\",\"date\":\"\",\"AttnRecdOn\":\"\",\"SalaryDate\":\"\",\"BillingDate\":\"\"},\"requestType\":\"SUPERVISOR\",\"fullRequest\":true}"));
                 osw.flush();
                 osw.close();
                 InputStream stream = connection.getInputStream();

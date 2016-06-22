@@ -39,6 +39,7 @@ public class ClientSelection_Activity extends AppCompatActivity {
     ArrayList<String> companyid=new ArrayList<>();
     ArrayList<String> location=new ArrayList<>();
     ArrayList<String> projectIds = new ArrayList<>();
+    ArrayList<String> desc = new ArrayList<>();
     String username;
     String cookie;
     ProgressDialog progress;
@@ -96,10 +97,11 @@ public class ClientSelection_Activity extends AppCompatActivity {
             @Override
             public void onItemClick(final int position, View v) {
                 Log.i(LOG_TAG, " Clicked on Item " + position);
-                final String scompany,scompanyid,slocation;
+                final String scompany,scompanyid,slocation,sdesc;
                 scompany=company.get(position);
-                scompanyid=company.get(position);
+                scompanyid=companyid.get(position);
                 slocation=location.get(position);
+                sdesc=desc.get(position);
                 final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(v.getContext());
                 alertDialogBuilder.setTitle("Confirm Action");
                 alertDialogBuilder.setMessage(company.get(position));
@@ -112,6 +114,7 @@ public class ClientSelection_Activity extends AppCompatActivity {
                         intent.putExtra("company",scompany);
                         intent.putExtra("companyid",scompanyid);
                         intent.putExtra("location",slocation);
+                        intent.putExtra("description",sdesc);
                         intent.putExtra("Cookie",cookie);
                         startActivity(intent);
 
@@ -141,6 +144,7 @@ public class ClientSelection_Activity extends AppCompatActivity {
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
                 name = jsonObject.optString("wbsDesc").toString();
                 id=jsonObject.optString("wbsId").toString();
+                desc.add(i,name);
                 String names[]=name.split("-");
                 DataObject obj = new DataObject(names[1], names[0]);
                 results.add(i, obj);
