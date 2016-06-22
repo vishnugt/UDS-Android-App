@@ -29,8 +29,11 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".Material_Activity"
+            android:label="Material Selection"
             android:screenOrientation="portrait" />
-        <activity android:name=".feedback_activity" />
+        <activity android:name=".feedback_activity"
+            android:label="Feedback"
+            android:screenOrientation="portrait"/>
         <activity android:name=".listview_activity"></activity>
     </application>
 

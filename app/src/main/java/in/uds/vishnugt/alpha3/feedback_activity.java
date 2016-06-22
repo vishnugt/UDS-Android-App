@@ -1,9 +1,11 @@
 package in.uds.vishnugt.alpha3;
 
 import android.content.DialogInterface;
+import android.os.AsyncTask;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -11,7 +13,15 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class feedback_activity extends AppCompatActivity {
 
@@ -19,6 +29,9 @@ public class feedback_activity extends AppCompatActivity {
     String username;
     String company;
     String companyid;
+    String outputresponse;
+    String desc;
+    String cookie;
     Spinner spinattendance,spingrooming,spintoilet,spinfloor,spinpantryroom,spindusting,spinfeedback;
     ArrayList<String> input=new ArrayList<>();
     AlertDialog alertDialog;
@@ -34,6 +47,8 @@ public class feedback_activity extends AppCompatActivity {
         username=extras.getString("username");
         company=extras.getString("company");
         companyid=extras.getString("companyid");
+        cookie=extras.getString("cookie");
+        desc=extras.getString("description");
 
         spinattendance=(Spinner)findViewById(R.id.spinattendance);
         spingrooming=(Spinner)findViewById(R.id.spingrooming);
@@ -77,6 +92,7 @@ public class feedback_activity extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface arg0, int arg1) {
                         Toast.makeText(getApplicationContext(), "You clicked yes button", Toast.LENGTH_LONG).show();
+                        new LongOperationsubmit().execute("");
                     }
                 });
                 alertDialogBuilder.setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -90,5 +106,67 @@ public class feedback_activity extends AppCompatActivity {
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private class LongOperationsubmit extends AsyncTask<String, Void, String> {
+
+        @Override
+        protected String doInBackground(String... params) {
+
+            try {
+                URL url = new URL("http://remote.uds.in:8081/flow/rest/request");
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                connection.setRequestMethod("POST");
+                connection.setDoOutput(true);
+                connection.setRequestProperty("Content-Type", "application/json");
+                connection.setRequestProperty("Connection", "keep-alive");
+                //connection.setRequestProperty("Content-Type", "application/json");
+                connection.setRequestProperty("Cookie", cookie);
+                OutputStreamWriter osw = new OutputStreamWriter(connection.getOutputStream());
+                String oswrite="{ \"supervisorList\": [ { ";
+                oswrite=oswrite.concat("\"attendance\": \""+input.get(0).toString()+"\",");
+                oswrite=oswrite.concat("\"grooming\": \""+input.get(1).toString()+"\",");
+                oswrite=oswrite.concat("\"cleanlinessToilet\": \""+input.get(2).toString()+"\",");
+                oswrite=oswrite.concat("\"cleanlinessFloor\": \""+input.get(3).toString()+"\",");
+                oswrite=oswrite.concat("\"cleanlinessPantry\": \""+input.get(4).toString()+"\",");
+                oswrite=oswrite.concat("\"cleanlinessDusting\": \""+input.get(5).toString()+"\",");
+                oswrite=oswrite.concat("\"feedback\": \""+input.get(6).toString()+"\",");
+                oswrite=oswrite.concat("\"comments\": \""+input.get(7).toString()+"\"");
+                Date today = new Date();
+                String current = today.toString();
+                oswrite=oswrite.concat("} ], \"requestFields\": { \"projectId\": \""+companyid+"\", \"projectDesc\": \""+desc+"\", \"recordcreationdate\": \""+current+"\", \"monthandYear\": \"June 1995\", \"timeClient\" : \"\", \"timeRegional\" : \"\", \"clientId\" : \"\", \"regionalHeadId\" : \"\", \"date\" : \"\", \"deliveryOrVisit\": \"visit\"}, \"requestType\": \"supervisor\", \"fresh\": true, \"status\": \"Visited\", \"changed\": true, \"transitions\": { \"1\": \"Visited\" }, \"editReason\": \"Automated from app\" }");
+                Log.e("JSON sent to the Server",oswrite);
+                osw.write(String.format(oswrite));
+                osw.flush();
+                osw.close();
+                InputStream stream = connection.getInputStream();
+                InputStreamReader isReader = new InputStreamReader(stream );
+                BufferedReader br = new BufferedReader(isReader );
+                //System.err.println(connection.getResponseCode() + connection.getResponseMessage());
+                //Log.d("vishnugt", connection.getResponseMessage() + connection.getResponseCode() );
+                outputresponse = br.readLine();
+                //Log.e("asdf", outputresponse);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return "";
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            Log.d("result", result);
+            Log.e("JSON",outputresponse);
+        }
+
+        @Override
+        protected void onPreExecute() {
+
+            //Toast.makeText(getApplicationContext(), "execction started", Toast.LENGTH_SHORT).show();
+
+        }
+
+        @Override
+        protected void onProgressUpdate(Void... values) {
+        }
     }
 }
