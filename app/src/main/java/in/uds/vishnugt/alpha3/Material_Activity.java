@@ -41,7 +41,7 @@ public class Material_Activity extends AppCompatActivity {
     AlertDialog alertDialog;
     ArrayList results;
     ArrayList<String> materials=new ArrayList<>();
-    ProgressDialog progress;
+    ProgressDialog progress,progresssubmit;
     Bundle extras;
     String username;
     String company;
@@ -104,7 +104,11 @@ public class Material_Activity extends AppCompatActivity {
                 alertDialogBuilder.setPositiveButton("yes", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface arg0, int arg1) {
-                        Toast.makeText(getApplicationContext(), "You clicked yes button", Toast.LENGTH_LONG).show();
+                        progresssubmit = new ProgressDialog(Material_Activity.this );
+                        progresssubmit.setTitle("Loading");
+                        progresssubmit.setMessage("Wait while loading...");
+                        progresssubmit.setCancelable(false);
+                        progresssubmit.show();
                         new LongOperationsubmit().execute("");
                         }
                 });
@@ -122,6 +126,17 @@ public class Material_Activity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    private void requeststatus(String os)
+    {
+        if(os!=null)
+        {
+            Log.e("outputresponse",os);
+            Toast.makeText(this,"Successful",Toast.LENGTH_SHORT).show();
+        }
+        else
+            Toast.makeText(this,"Not Successful",Toast.LENGTH_SHORT).show();
+
+    }
 
     private class LongOperation extends AsyncTask<String, Void, String> {
         @Override
@@ -234,7 +249,8 @@ public class Material_Activity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String result) {
             Log.d("result", result);
-            Log.e("JSON",outputresponse);
+            progresssubmit.dismiss();
+            requeststatus(outputresponse);
         }
 
         @Override

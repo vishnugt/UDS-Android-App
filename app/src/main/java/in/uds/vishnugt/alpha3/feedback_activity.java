@@ -1,5 +1,6 @@
 package in.uds.vishnugt.alpha3;
 
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.support.v7.app.AlertDialog;
@@ -32,6 +33,7 @@ public class feedback_activity extends AppCompatActivity {
     String outputresponse;
     String desc;
     String cookie;
+    ProgressDialog progresssubmit;
     Spinner spinattendance,spingrooming,spintoilet,spinfloor,spinpantryroom,spindusting,spinfeedback;
     ArrayList<String> input=new ArrayList<>();
     AlertDialog alertDialog;
@@ -91,7 +93,11 @@ public class feedback_activity extends AppCompatActivity {
                 alertDialogBuilder.setPositiveButton("yes", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface arg0, int arg1) {
-                        Toast.makeText(getApplicationContext(), "You clicked yes button", Toast.LENGTH_LONG).show();
+                        progresssubmit = new ProgressDialog(feedback_activity.this );
+                        progresssubmit.setTitle("Loading");
+                        progresssubmit.setMessage("Wait while loading...");
+                        progresssubmit.setCancelable(false);
+                        progresssubmit.show();
                         new LongOperationsubmit().execute("");
                     }
                 });
@@ -106,6 +112,18 @@ public class feedback_activity extends AppCompatActivity {
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void requeststatus(String os)
+    {
+        if(os!=null)
+        {
+            Log.e("outputresponse",os);
+            Toast.makeText(this,"Successful",Toast.LENGTH_SHORT).show();
+        }
+        else
+            Toast.makeText(this,"Not Successful",Toast.LENGTH_SHORT).show();
+
     }
 
     private class LongOperationsubmit extends AsyncTask<String, Void, String> {
@@ -154,8 +172,9 @@ public class feedback_activity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(String result) {
+            progresssubmit.dismiss();
             Log.d("result", result);
-            Log.e("JSON",outputresponse);
+            requeststatus(outputresponse);
         }
 
         @Override
