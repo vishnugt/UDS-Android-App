@@ -1,5 +1,6 @@
 package in.uds.vishnugt.alpha3;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
@@ -35,20 +36,18 @@ public class Delivery_or_Visit extends AppCompatActivity {
     String location;
     String cookie;
     String desc;
+    String enddate;
     TextView companyname,locationname;
     ListView listview;
     ArrayAdapter adapter;
+    Intent intent;
     ArrayList<String> array=new ArrayList<>();
+    MonthYearPicker datepick;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_delivery_supervisor);
-
-        companyname=(TextView)findViewById(R.id.company);
-        locationname=(TextView)findViewById(R.id.location);
-        listview=(ListView)findViewById(R.id.listview);
-
 
         Bundle extras=getIntent().getExtras();
         username=extras.getString("username");
@@ -57,6 +56,30 @@ public class Delivery_or_Visit extends AppCompatActivity {
         location=extras.getString("location");
         cookie=extras.getString("Cookie");
         desc=extras.getString("description");
+        enddate=extras.getString("enddate");
+
+        companyname=(TextView)findViewById(R.id.company);
+        locationname=(TextView)findViewById(R.id.location);
+        listview=(ListView)findViewById(R.id.listview);
+        datepick.MIN_YEAR=2013;
+        datepick.MAX_YEAR=Integer.parseInt(enddate.split("-")[0]);
+
+        datepick = new MonthYearPicker(this);
+        datepick.build(new DialogInterface.OnClickListener() {
+
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                if(which==-1) {
+                    intent.putExtra("month",datepick.getSelectedMonthName());
+                    intent.putExtra("year",datepick.getSelectedYear());
+                    startActivity(intent);
+                }
+            }
+        }, null);
+
+        Log.e("End date","--"+datepick.MAX_YEAR+"--");
+
+
 
         companyname.setText(company.trim());
         locationname.setText(location.trim());
@@ -91,13 +114,13 @@ public class Delivery_or_Visit extends AppCompatActivity {
 
     public void materialdelivery(View v)
     {
-        Intent intent = new Intent(getApplicationContext(), Material_Activity.class);
+        intent = new Intent(getApplicationContext(), Material_Activity.class);
         intent.putExtra("username",username);
         intent.putExtra("company",company);
         intent.putExtra("companyid",companyid);
         intent.putExtra("description",desc);
         intent.putExtra("cookie",cookie);
-        startActivity(intent);
+        datepick.show();
     }
 
     public void feedback(View v)
@@ -108,7 +131,7 @@ public class Delivery_or_Visit extends AppCompatActivity {
         intent.putExtra("companyid",companyid);
         intent.putExtra("description",desc);
         intent.putExtra("cookie",cookie);
-        startActivity(intent);
+        datepick.show();
     }
 
 

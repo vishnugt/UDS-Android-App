@@ -40,6 +40,7 @@ public class ClientSelection_Activity extends AppCompatActivity {
     ArrayList<String> location=new ArrayList<>();
     ArrayList<String> projectIds = new ArrayList<>();
     ArrayList<String> desc = new ArrayList<>();
+    ArrayList<String> enddates=new ArrayList<>();
     String username;
     String cookie;
     ProgressDialog progress;
@@ -97,11 +98,12 @@ public class ClientSelection_Activity extends AppCompatActivity {
             @Override
             public void onItemClick(final int position, View v) {
                 Log.i(LOG_TAG, " Clicked on Item " + position);
-                final String scompany,scompanyid,slocation,sdesc;
+                final String scompany,scompanyid,senddate,slocation,sdesc;
                 scompany=company.get(position);
                 scompanyid=companyid.get(position);
                 slocation=location.get(position);
                 sdesc=desc.get(position);
+                senddate=enddates.get(position);
                 final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(v.getContext());
                 alertDialogBuilder.setTitle("Confirm Action");
                 alertDialogBuilder.setMessage(company.get(position));
@@ -116,6 +118,7 @@ public class ClientSelection_Activity extends AppCompatActivity {
                         intent.putExtra("location",slocation);
                         intent.putExtra("description",sdesc);
                         intent.putExtra("Cookie",cookie);
+                        intent.putExtra("enddate",senddate);
                         startActivity(intent);
 
                     }
@@ -139,11 +142,12 @@ public class ClientSelection_Activity extends AppCompatActivity {
             Log.e("Clients",jsonarray);
             jsonRootObject = new JSONObject(jsonarray);
             JSONArray jsonArray = jsonRootObject.optJSONArray("Clients");
-            String name,id;
+            String name,id,enddate;
             for(int i=0; i < jsonArray.length(); i++) {
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
                 name = jsonObject.optString("wbsDesc").toString();
                 id=jsonObject.optString("wbsId").toString();
+                enddate=jsonObject.optString("endDate");
                 desc.add(i,name);
                 String names[]=name.split("-");
                 DataObject obj = new DataObject(names[1], names[0]);
@@ -151,6 +155,7 @@ public class ClientSelection_Activity extends AppCompatActivity {
                 company.add(i, names[0]);
                 companyid.add(i,id);
                 location.add(i,names[1]);
+                enddates.add(i,enddate);
             }
         } catch (JSONException e) {
             e.printStackTrace();

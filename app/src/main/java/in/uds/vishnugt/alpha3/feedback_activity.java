@@ -33,6 +33,8 @@ public class feedback_activity extends AppCompatActivity {
     String outputresponse;
     String desc;
     String cookie;
+    String month;
+    int year;
     ProgressDialog progresssubmit;
     Spinner spinattendance,spingrooming,spintoilet,spinfloor,spinpantryroom,spindusting,spinfeedback;
     ArrayList<String> input=new ArrayList<>();
@@ -51,6 +53,8 @@ public class feedback_activity extends AppCompatActivity {
         companyid=extras.getString("companyid");
         cookie=extras.getString("cookie");
         desc=extras.getString("description");
+        month=extras.getString("month");
+        year=extras.getInt("year");
 
         spinattendance=(Spinner)findViewById(R.id.spinattendance);
         spingrooming=(Spinner)findViewById(R.id.spingrooming);
@@ -152,7 +156,7 @@ public class feedback_activity extends AppCompatActivity {
                 oswrite=oswrite.concat("\"comments\": \""+input.get(7).toString()+"\"");
                 Date today = new Date();
                 String current = today.toString();
-                oswrite=oswrite.concat("} ], \"requestFields\": { \"projectId\": \""+companyid+"\", \"projectDesc\": \""+desc+"\", \"recordcreationdate\": \""+current+"\", \"monthandYear\": \"June 1995\", \"timeClient\" : \"\", \"timeRegional\" : \"\", \"clientId\" : \"\", \"regionalHeadId\" : \"\", \"date\" : \"\", \"deliveryOrVisit\": \"visit\"}, \"requestType\": \"supervisor\", \"fresh\": true, \"status\": \"Visited\", \"changed\": true, \"transitions\": { \"1\": \"Visited\" }, \"editReason\": \"Automated from app\" }");
+                oswrite=oswrite.concat("} ], \"requestFields\": { \"projectId\": \""+companyid+"\", \"projectDesc\": \""+desc+"\", \"recordcreationdate\": \""+current+"\", \"monthandYear\": \""+month+" "+year+"\", \"timeClient\" : \"\", \"timeRegional\" : \"\", \"clientId\" : \"\", \"regionalHeadId\" : \"\", \"date\" : \"\", \"deliveryOrVisit\": \"visit\"}, \"requestType\": \"supervisor\", \"fresh\": true, \"status\": \"Visited\", \"changed\": true, \"transitions\": { \"1\": \"Visited\" }, \"editReason\": \"Automated from app\" }");
                 Log.e("JSON sent to the Server",oswrite);
                 osw.write(String.format(oswrite));
                 osw.flush();

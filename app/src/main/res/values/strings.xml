@@ -13,5 +13,8 @@
         <item>Satisfactory</item>
         <item>Needs improvement</item>
     </string-array>
+    <string name="SELECT_MONTH">SELECT MONTH</string>
+    <string name="OKAY">Okay</string>
+    <string name="NOT_OKAY">Cancel</string>
 
 </resources>
