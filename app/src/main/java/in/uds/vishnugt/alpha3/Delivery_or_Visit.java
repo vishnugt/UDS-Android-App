@@ -1,5 +1,6 @@
 package in.uds.vishnugt.alpha3;
 
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -18,6 +19,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -25,6 +27,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLConnection;
 import java.util.ArrayList;
 
 public class Delivery_or_Visit extends AppCompatActivity {
@@ -41,8 +44,10 @@ public class Delivery_or_Visit extends AppCompatActivity {
     ListView listview;
     ArrayAdapter adapter;
     Intent intent;
+    String time;
     ArrayList<String> array=new ArrayList<>();
     MonthYearPicker datepick;
+    ProgressDialog progress;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,11 +63,17 @@ public class Delivery_or_Visit extends AppCompatActivity {
         desc=extras.getString("description");
         enddate=extras.getString("enddate");
 
+        new LongOperationtime().execute("");
+
+        progress = new ProgressDialog(this);
+        progress.setTitle("Loading");
+        progress.setMessage("Wait while loading...");
+        progress.setCancelable(false);
+        progress.show();
+
         companyname=(TextView)findViewById(R.id.company);
         locationname=(TextView)findViewById(R.id.location);
         listview=(ListView)findViewById(R.id.listview);
-        datepick.MIN_YEAR=2013;
-        datepick.MAX_YEAR=Integer.parseInt(enddate.split("-")[0]);
 
         datepick = new MonthYearPicker(this);
         datepick.build(new DialogInterface.OnClickListener() {
@@ -90,6 +101,7 @@ public class Delivery_or_Visit extends AppCompatActivity {
         Log.e("description",desc);
 
         new LongOperation().execute("");
+
 
     }
 
@@ -204,6 +216,50 @@ public class Delivery_or_Visit extends AppCompatActivity {
 
             //Toast.makeText(getApplicationContext(), "execction started", Toast.LENGTH_SHORT).show();
 
+        }
+
+        @Override
+        protected void onProgressUpdate(Void... values) {
+        }
+    }
+
+
+
+    private class LongOperationtime extends AsyncTask<String, Void, String> {
+        @Override
+        protected String doInBackground(String... params) {
+
+            URLConnection urlConnection;
+            StringBuilder result = new StringBuilder();
+
+            try {
+                URL url = new URL("http://remote.uds.in:8081/xtime/client/time");
+                urlConnection = url.openConnection();
+                InputStream in = new BufferedInputStream(urlConnection.getInputStream());
+                BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    result.append(line);
+                }
+
+            }catch( Exception e) {
+                e.printStackTrace();
+            }
+            finally {
+            }
+            return result.toString();
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            Log.d("result", result);
+            datepick.MIN_YEAR=Integer.parseInt(result.split(" ")[0].split("-")[0]);
+            datepick.MAX_YEAR=Integer.parseInt(result.split(" ")[0].split("-")[0]);
+            progress.dismiss();
+        }
+
+        @Override
+        protected void onPreExecute() {
         }
 
         @Override

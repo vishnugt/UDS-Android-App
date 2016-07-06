@@ -2,6 +2,7 @@ package in.uds.vishnugt.alpha3;
 
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -124,6 +125,10 @@ public class feedback_activity extends AppCompatActivity {
         {
             Log.e("outputresponse",os);
             Toast.makeText(this,"Successful",Toast.LENGTH_SHORT).show();
+            Intent startintent=new Intent(this,login_activity.class);
+            startintent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            this.startActivity(startintent);
+            finish();
         }
         else
             Toast.makeText(this,"Not Successful",Toast.LENGTH_SHORT).show();

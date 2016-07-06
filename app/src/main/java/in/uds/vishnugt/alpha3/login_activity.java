@@ -169,16 +169,14 @@ public class login_activity extends AppCompatActivity {
                     }
                     projectIdjson = jsonRootObject.getJSONObject("projectIdMap");
                     //Log.e("projectIdmap", projectIdjson.toString());
-
-                    if(haveaccess)
-                    {
-                        JSONArray supervisorJSONArray = projectIdjson.getJSONArray("SUPERVISOR");
-                        for(int i=0; i<supervisorJSONArray.length(); i++)
-                        {
-                            projectIds.add(i, supervisorJSONArray.getString(i));
+                    if(projectIdjson!=null) {
+                        if (haveaccess) {
+                            JSONArray supervisorJSONArray = projectIdjson.getJSONArray("SUPERVISOR");
+                            for (int i = 0; i < supervisorJSONArray.length(); i++) {
+                                projectIds.add(i, supervisorJSONArray.getString(i));
+                            }
                         }
                     }
-
                 }
                 aftercomplete();
             } catch (JSONException e) {

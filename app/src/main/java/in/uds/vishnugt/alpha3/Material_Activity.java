@@ -135,6 +135,10 @@ public class Material_Activity extends AppCompatActivity {
         {
             Log.e("outputresponse",os);
             Toast.makeText(this,"Successful",Toast.LENGTH_SHORT).show();
+            Intent startintent=new Intent(this,login_activity.class);
+            startintent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            this.startActivity(startintent);
+            finish();
         }
         else
             Toast.makeText(this,"Not Successful",Toast.LENGTH_SHORT).show();
@@ -194,13 +198,23 @@ public class Material_Activity extends AppCompatActivity {
             jsonRootObject = new JSONObject(jsonarray);
             JSONArray jsonArray = jsonRootObject.optJSONArray("Materials");
             String name;
+            int id;
+            DataObject empty = new DataObject("", "");
+            for(int i=0; i < jsonArray.length(); i++)
+            {
+                results.add(i,empty);
+                materials.add(i, "");
+            }
             for(int i=0; i < jsonArray.length(); i++) {
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
                 name = jsonObject.optString("materialDesc").toString();
-                Log.d("materials", name);
-                materials.add(i,name);
+                id = Integer.parseInt(jsonObject.optString("materialId").toString());
+                Log.d("materials - id", name+"--"+id);
+                //materials.add(id,name);
+                materials.set(id - 1, name);
                 DataObject obj = new DataObject(name.toString(), "");
-                results.add(i, obj);
+                //results.add(id, obj);
+                results.set(id - 1, obj);
             }
         } catch (JSONException e) {
             e.printStackTrace();
