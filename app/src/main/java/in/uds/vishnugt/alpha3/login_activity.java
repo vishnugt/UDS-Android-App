@@ -204,7 +204,7 @@ public class login_activity extends AppCompatActivity {
             //Toast.makeText(getApplicationContext(), "User logged in", Toast.LENGTH_SHORT).show();
             havepermission=false;
             haveaccess=false;
-            Intent intent = new Intent(this, ClientSelection_Activity.class);
+            Intent intent = new Intent(this, activity_birla_shriram.class);
             intent.putExtra("uname", usernameintext);
             intent.putExtra("Cookie",cookie);
             intent.putExtra("projectIds", projectIds);

@@ -45,6 +45,7 @@ public class ClientSelection_Activity extends AppCompatActivity {
     String cookie;
     ProgressDialog progress;
     Bundle extras;
+    String birla_shriram;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,7 +57,7 @@ public class ClientSelection_Activity extends AppCompatActivity {
         username=extras.getString("uname");
         cookie=extras.getString("Cookie");
         projectIds = extras.getStringArrayList("projectIds");
-
+        birla_shriram = extras.getString("birla_shriram");
 
         Toast.makeText(this,"Welcome "+username,Toast.LENGTH_SHORT).show();
         results = new ArrayList<>();
@@ -180,7 +181,7 @@ public class ClientSelection_Activity extends AppCompatActivity {
                     urlpart = urlpart.concat("'" + temp + "',");
                 }
                 urlpart = urlpart.substring(0, urlpart.length()-1);
-                URL url = new URL("http://remote.uds.in:8081/xtime/client/details/" + urlpart);
+                URL url = new URL("http://remote.uds.in:8081/xtime/client/client/" + birla_shriram + "-" + urlpart);
                 Log.e("urlcheck", url.toString());
                 urlConnection = url.openConnection();
                 InputStream in = new BufferedInputStream(urlConnection.getInputStream());
