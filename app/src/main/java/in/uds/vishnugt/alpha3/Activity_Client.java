@@ -26,7 +26,7 @@ public class Activity_Client extends AppCompatActivity {
     public void birlabtn(View v)
     {
         Intent intent = new Intent(this, ClientSelection_Activity.class);
-        intent.putExtra("birla_shriram", "BIRLA");
+        intent.putExtra("client", "BIRLA");
         intent.putExtra("uname", username);
         intent.putExtra("Cookie",cookie);
         intent.putExtra("projectIds", projectIds);
@@ -36,7 +36,7 @@ public class Activity_Client extends AppCompatActivity {
     {
 
         Intent intent = new Intent(this, ClientSelection_Activity.class);
-        intent.putExtra("birla_shriram", "SHRIRAM");
+        intent.putExtra("client", "SHRIRAM");
         intent.putExtra("uname", username);
         intent.putExtra("Cookie",cookie);
         intent.putExtra("projectIds", projectIds);

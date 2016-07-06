@@ -47,7 +47,7 @@ public class Material_Activity extends AppCompatActivity {
     String company;
     String companyid;
     String desc;
-    String birla_shriram;
+    String client;
     String cookie;
     String outputresponse;
     String month;
@@ -65,7 +65,7 @@ public class Material_Activity extends AppCompatActivity {
         desc=extras.getString("description");
         month=extras.getString("month");
         year=extras.getInt("year");
-        birla_shriram=extras.getString("birla_shriram");
+        client=extras.getString("client");
         new LongOperation().execute("");
 
         progress = new ProgressDialog(this);

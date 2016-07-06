@@ -49,7 +49,7 @@ public class Delivery_or_Visit extends AppCompatActivity {
     ArrayList<String> array=new ArrayList<>();
     MonthYearPicker datepick;
     ProgressDialog progress;
-    String birla_shriram;
+    String client;
     Button materialbtn;
 
     @Override
@@ -65,7 +65,7 @@ public class Delivery_or_Visit extends AppCompatActivity {
         cookie=extras.getString("Cookie");
         desc=extras.getString("description");
         enddate=extras.getString("enddate");
-        birla_shriram=extras.getString("birla_shriram");
+        client=extras.getString("client");
 
         new LongOperationtime().execute("");
 
@@ -106,7 +106,7 @@ public class Delivery_or_Visit extends AppCompatActivity {
         Log.e("description",desc);
 
         new LongOperation().execute("");
-        if(birla_shriram.equals("BIRLA"))
+        if(client.equals("BIRLA"))
         {
             Log.e("btn", "conditionmatches");
             materialbtn.setVisibility(View.GONE);
@@ -147,14 +147,26 @@ public class Delivery_or_Visit extends AppCompatActivity {
 
     public void feedback(View v)
     {
-        intent=new Intent(getApplicationContext(),feedback_activity.class);
-        intent.putExtra("username",username);
-        intent.putExtra("company",company);
-        intent.putExtra("companyid",companyid);
-        intent.putExtra("description",desc);
-        intent.putExtra("cookie",cookie);
-        intent.putExtra("birla_shriram", birla_shriram);
-        datepick.show();
+        if(client.equals("SHRIRAM")) {
+            intent = new Intent(getApplicationContext(), feedback_activity.class);
+            intent.putExtra("username", username);
+            intent.putExtra("company", company);
+            intent.putExtra("companyid", companyid);
+            intent.putExtra("description", desc);
+            intent.putExtra("cookie", cookie);
+            intent.putExtra("client", client);
+            datepick.show();
+        }
+        else{
+            intent = new Intent(getApplicationContext(), feedback_activity.class);
+            intent.putExtra("username", username);
+            intent.putExtra("company", company);
+            intent.putExtra("companyid", companyid);
+            intent.putExtra("description", desc);
+            intent.putExtra("cookie", cookie);
+            intent.putExtra("client", client);
+            datepick.show();
+        }
     }
 
 
