@@ -47,6 +47,7 @@ public class Material_Activity extends AppCompatActivity {
     String company;
     String companyid;
     String desc;
+    String birla_shriram;
     String cookie;
     String outputresponse;
     String month;
@@ -64,6 +65,7 @@ public class Material_Activity extends AppCompatActivity {
         desc=extras.getString("description");
         month=extras.getString("month");
         year=extras.getInt("year");
+        birla_shriram=extras.getString("birla_shriram");
         new LongOperation().execute("");
 
         progress = new ProgressDialog(this);
@@ -153,7 +155,7 @@ public class Material_Activity extends AppCompatActivity {
             StringBuilder result = new StringBuilder();
 
             try {
-                URL url = new URL("http://remote.uds.in:8081/xtime/client/materials");
+                URL url = new URL("http://remote.uds.in:8081/xtime/client/materials/SHRIRAM");
                 urlConnection = url.openConnection();
                 InputStream in = new BufferedInputStream(urlConnection.getInputStream());
                 BufferedReader reader = new BufferedReader(new InputStreamReader(in));

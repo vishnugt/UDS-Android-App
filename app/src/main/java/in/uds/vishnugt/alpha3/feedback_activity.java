@@ -41,6 +41,7 @@ public class feedback_activity extends AppCompatActivity {
     ArrayList<String> input=new ArrayList<>();
     AlertDialog alertDialog;
     EditText comments;
+    String birla_shriram;
 
 
     @Override
@@ -56,6 +57,7 @@ public class feedback_activity extends AppCompatActivity {
         desc=extras.getString("description");
         month=extras.getString("month");
         year=extras.getInt("year");
+        birla_shriram=extras.getString("birla_shriram");
 
         spinattendance=(Spinner)findViewById(R.id.spinattendance);
         spingrooming=(Spinner)findViewById(R.id.spingrooming);

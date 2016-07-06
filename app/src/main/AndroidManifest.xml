@@ -36,7 +36,7 @@
             android:label="Feedback"
             android:screenOrientation="portrait" />
         <activity android:name=".listview_activity" />
-        <activity android:name=".activity_birla_shriram"></activity>
+        <activity android:name=".Activity_Client"></activity>
     </application>
 
 </manifest>

@@ -105,33 +105,18 @@ public class ClientSelection_Activity extends AppCompatActivity {
                 slocation=location.get(position);
                 sdesc=desc.get(position);
                 senddate=enddates.get(position);
-                final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(v.getContext());
-                alertDialogBuilder.setTitle("Confirm Action");
-                alertDialogBuilder.setMessage(company.get(position));
-                alertDialogBuilder.setPositiveButton("yes", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface arg0, int arg1) {
-                        //Toast.makeText(ClientSelection_Activity.this, "You clicked yes button for" + position, Toast.LENGTH_LONG).show();
-                        Intent intent = new Intent(getApplicationContext(), Delivery_or_Visit.class);
-                        intent.putExtra("username",username);
-                        intent.putExtra("company",scompany);
-                        intent.putExtra("companyid",scompanyid);
-                        intent.putExtra("location",slocation);
-                        intent.putExtra("description",sdesc);
-                        intent.putExtra("Cookie",cookie);
-                        intent.putExtra("enddate",senddate);
-                        startActivity(intent);
+                Intent intent = new Intent(getApplicationContext(), Delivery_or_Visit.class);
+                intent.putExtra("username",username);
+                intent.putExtra("company",scompany);
+                intent.putExtra("companyid",scompanyid);
+                intent.putExtra("location",slocation);
+                intent.putExtra("description",sdesc);
+                intent.putExtra("Cookie",cookie);
+                intent.putExtra("enddate",senddate);
+                intent.putExtra("birla_shriram", birla_shriram);
+                startActivity(intent);
 
-                    }
-                });
-                alertDialogBuilder.setNegativeButton("No",new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        alertDialog.dismiss();
-                    }
-                });
-                alertDialog = alertDialogBuilder.create();
-                alertDialog.show();            }
+                }
         });
     }
 
@@ -180,6 +165,7 @@ public class ClientSelection_Activity extends AppCompatActivity {
                 {
                     urlpart = urlpart.concat("'" + temp + "',");
                 }
+                Log.e("birla_shriram", birla_shriram);
                 urlpart = urlpart.substring(0, urlpart.length()-1);
                 URL url = new URL("http://remote.uds.in:8081/xtime/client/client/" + birla_shriram + "-" + urlpart);
                 Log.e("urlcheck", url.toString());

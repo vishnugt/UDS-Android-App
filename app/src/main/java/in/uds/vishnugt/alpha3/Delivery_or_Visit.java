@@ -11,6 +11,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -48,6 +49,8 @@ public class Delivery_or_Visit extends AppCompatActivity {
     ArrayList<String> array=new ArrayList<>();
     MonthYearPicker datepick;
     ProgressDialog progress;
+    String birla_shriram;
+    Button materialbtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +65,7 @@ public class Delivery_or_Visit extends AppCompatActivity {
         cookie=extras.getString("Cookie");
         desc=extras.getString("description");
         enddate=extras.getString("enddate");
+        birla_shriram=extras.getString("birla_shriram");
 
         new LongOperationtime().execute("");
 
@@ -74,6 +78,7 @@ public class Delivery_or_Visit extends AppCompatActivity {
         companyname=(TextView)findViewById(R.id.company);
         locationname=(TextView)findViewById(R.id.location);
         listview=(ListView)findViewById(R.id.listview);
+        materialbtn=(Button)findViewById(R.id.material);
 
         datepick = new MonthYearPicker(this);
         datepick.build(new DialogInterface.OnClickListener() {
@@ -101,6 +106,11 @@ public class Delivery_or_Visit extends AppCompatActivity {
         Log.e("description",desc);
 
         new LongOperation().execute("");
+        if(birla_shriram.equals("BIRLA"))
+        {
+            Log.e("btn", "conditionmatches");
+            materialbtn.setVisibility(View.GONE);
+        }
 
 
     }
@@ -143,6 +153,7 @@ public class Delivery_or_Visit extends AppCompatActivity {
         intent.putExtra("companyid",companyid);
         intent.putExtra("description",desc);
         intent.putExtra("cookie",cookie);
+        intent.putExtra("birla_shriram", birla_shriram);
         datepick.show();
     }
 

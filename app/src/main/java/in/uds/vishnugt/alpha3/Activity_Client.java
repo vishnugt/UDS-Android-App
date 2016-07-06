@@ -7,7 +7,7 @@ import android.view.View;
 
 import java.util.ArrayList;
 
-public class activity_birla_shriram extends AppCompatActivity {
+public class Activity_Client extends AppCompatActivity {
 
     public String username, cookie;
     ArrayList<String> projectIds = new ArrayList<>();
@@ -15,7 +15,7 @@ public class activity_birla_shriram extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_birla_shriram);
+        setContentView(R.layout.activity_client);
 
         extras=getIntent().getExtras();
         username=extras.getString("uname");
