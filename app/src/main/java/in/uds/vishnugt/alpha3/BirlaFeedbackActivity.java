@@ -41,6 +41,7 @@ public class BirlaFeedbackActivity extends AppCompatActivity {
     ArrayList<String> conditions=new ArrayList<>();
     ArrayList<String> remarks=new ArrayList<>();
     ArrayList<String> yesorno=new ArrayList<>();
+    ArrayList<String> questions=new ArrayList<>();
 
     AlertDialog alertDialog;
     ArrayList results;
@@ -89,6 +90,19 @@ public class BirlaFeedbackActivity extends AppCompatActivity {
         menu.getItem(0).setTitle("SUBMIT");
         return true;
     }
+
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.user:
+                new LongOperationsubmit().execute("");
+                return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+
+
 
 
 
@@ -166,6 +180,7 @@ public class BirlaFeedbackActivity extends AppCompatActivity {
             for(int i=0; i < jsonArray.length(); i++)
             {
                 results.add(i,empty);
+                questions.add(i,"");
             }
             for(int i=0; i < jsonArray.length(); i++) {
                 feedbackjsonobj=jsonArray.getJSONObject(i);
@@ -173,6 +188,7 @@ public class BirlaFeedbackActivity extends AppCompatActivity {
                 DataObject2 obj = new DataObject2("", "", "", question);
                 //results.add(id, obj);
                 results.set(i, obj);
+                questions.set(i, question);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -180,7 +196,7 @@ public class BirlaFeedbackActivity extends AppCompatActivity {
     }
 
 
-    /*private class LongOperationsubmit extends AsyncTask<String, Void, String> {
+    private class LongOperationsubmit extends AsyncTask<String, Void, String> {
 
         @Override
         protected String doInBackground(String... params) {
@@ -195,15 +211,15 @@ public class BirlaFeedbackActivity extends AppCompatActivity {
                 //connection.setRequestProperty("Content-Type", "application/json");
                 connection.setRequestProperty("Cookie", cookie);
                 OutputStreamWriter osw = new OutputStreamWriter(connection.getOutputStream());
-                String oswrite="{ \"supervisorList\": [ { ";
-                for(int i=0;i<materials.size();i++)
+                String oswrite="{ \"supervisorList\": [  ";
+                for(int i=0;i<results.size();i++)
                 {
-                    oswrite=oswrite.concat("\"material"+(i+1)+"\": \""+mAdapter.countmaterial.get(i).toString()+"\",");
+                    oswrite=oswrite.concat("{\"type\": \"feeback\" , \"query\" : \""+questions.get(i)+"\" , \"reply\": \""+mAdapter.yesornoArray.get(i)+"\" , \"condition\": \""+mAdapter.feedbackconditionArray.get(i)+"\","+"\"remarks\": \""+mAdapter.feedbackremarksArray.get(i)+"\"},");
                 }
                 oswrite=oswrite.substring(0,oswrite.length()-1);
                 Date today = new Date();
                 String current = today.toString();
-                oswrite=oswrite.concat("} ], \"requestFields\": { \"projectId\": \""+companyid+"\", \"projectDesc\": \""+desc+"\", \"recordcreationdate\": \""+current+"\", \"monthandYear\": \""+month+" "+year+"\", \"timeClient\" : \"\", \"timeRegional\" : \"\", \"clientId\" : \"\", \"regionalHeadId\" : \"\", \"date\" : \"\", \"deliveryOrVisit\": \"delivery\"}, \"requestType\": \"supervisor\", \"fresh\": true, \"status\": \"Visited\", \"changed\": true, \"transitions\": { \"1\": \"Visited\" }, \"editReason\": \"Automated from app\" }");
+                oswrite=oswrite.concat(" ], \"requestFields\": { \"projectId\": \""+companyid+"\", \"projectDesc\": \""+desc+"\", \"recordcreationdate\": \""+current+"\", \"monthandYear\": \""+month+" "+year+"\", \"timeClient\" : \"\", \"timeRegional\" : \"\", \"clientId\" : \"\", \"regionalHeadId\" : \"\", \"date\" : \"\", \"deliveryOrVisit\": \"delivery\"}, \"requestType\": \"supervisor\", \"fresh\": true, \"status\": \"Visited\", \"changed\": true, \"transitions\": { \"1\": \"Visited\" }, \"editReason\": \"Automated from app\" }");
                 Log.e("JSON sent to the Server",oswrite);
                 osw.write(String.format(oswrite));
                 osw.flush();
@@ -238,5 +254,5 @@ public class BirlaFeedbackActivity extends AppCompatActivity {
         @Override
         protected void onProgressUpdate(Void... values) {
         }
-    }*/
+    }
 }

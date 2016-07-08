@@ -24,7 +24,7 @@ public class RecyclerViewforFeedback extends RecyclerView
     private static String LOG_TAG = "RecyclerViewforFeedback";
     private ArrayList<DataObject2> mDataset;
 
-    public ArrayList<String> feedbackcommentsArray=new ArrayList<>();
+    public ArrayList<String> feedbackconditionArray=new ArrayList<>();
     public ArrayList<String> feedbackremarksArray=new ArrayList<>();
     public ArrayList<String> yesornoArray=new ArrayList<>();
 
@@ -34,14 +34,14 @@ public class RecyclerViewforFeedback extends RecyclerView
             implements View
             .OnClickListener {
         TextView feedbackname;
-        EditText feedbackresponse;
+        EditText feebackcondition;
         EditText feedbackremarks;
         Spinner spinner;
 
         public DataObjectHolder(View itemView) {
             super(itemView);
             feedbackname = (TextView) itemView.findViewById(R.id.feedbackname);
-            feedbackresponse = (EditText) itemView.findViewById(R.id.feedbackresponse);
+            feebackcondition = (EditText) itemView.findViewById(R.id.feedbackresponse);
             feedbackremarks = (EditText) itemView.findViewById(R.id.feedbackremarks);
             spinner = (Spinner) itemView.findViewById(R.id.spinner);
             Log.i(LOG_TAG, "Adding Listener");
@@ -67,7 +67,7 @@ public class RecyclerViewforFeedback extends RecyclerView
         mDataset = myDataset;
         for(int i=0;i<mDataset.size();i++)
         {
-            feedbackcommentsArray.add(i,"");
+            feedbackconditionArray.add(i,"");
             feedbackremarksArray.add(i,"");
             yesornoArray.add(i, "");
         }
@@ -88,26 +88,26 @@ public class RecyclerViewforFeedback extends RecyclerView
         holder.feedbackname.setText(mDataset.get(position).getTitles());
         //holder.feedbackname.setText(mDataset.get(position).getCondition());
         //holder.dateTime.setText(mDataset.get(position).getmText2());
-        holder.feedbackresponse.addTextChangedListener(new TextWatcher() {
+        holder.feebackcondition.addTextChangedListener(new TextWatcher() {
 
             @Override
             public void onTextChanged(CharSequence s, int start,
                                       int before, int count) {
                 //setting data to array, when changed
-                feedbackcommentsArray.set(position,s.toString());
+                feedbackconditionArray.set(position,s.toString());
                 Log.e(position+"",s.toString());
             }
 
             @Override
             public void beforeTextChanged(CharSequence s, int start,
                                           int count, int after) {
-                feedbackcommentsArray.set(position,s.toString());
+                feedbackconditionArray.set(position,s.toString());
 
             }
 
             @Override
             public void afterTextChanged(Editable s) {
-                feedbackcommentsArray.set(position,s.toString());
+                feedbackconditionArray.set(position,s.toString());
             }
         });
 
