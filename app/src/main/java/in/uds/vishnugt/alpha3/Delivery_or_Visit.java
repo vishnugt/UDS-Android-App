@@ -142,6 +142,7 @@ public class Delivery_or_Visit extends AppCompatActivity {
         intent.putExtra("companyid",companyid);
         intent.putExtra("description",desc);
         intent.putExtra("cookie",cookie);
+        intent.putExtra("client", client);
         datepick.show();
     }
 
@@ -157,8 +158,8 @@ public class Delivery_or_Visit extends AppCompatActivity {
             intent.putExtra("client", client);
             datepick.show();
         }
-        else{
-            intent = new Intent(getApplicationContext(), feedback_activity.class);
+        if(client.equals("BIRLA")) {
+            intent = new Intent(getApplicationContext(), BirlaFeedbackActivity.class);
             intent.putExtra("username", username);
             intent.putExtra("company", company);
             intent.putExtra("companyid", companyid);

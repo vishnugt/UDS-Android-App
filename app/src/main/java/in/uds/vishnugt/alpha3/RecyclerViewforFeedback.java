@@ -95,6 +95,7 @@ public class RecyclerViewforFeedback extends RecyclerView
                                       int before, int count) {
                 //setting data to array, when changed
                 feedbackcommentsArray.set(position,s.toString());
+                Log.e(position+"",s.toString());
             }
 
             @Override

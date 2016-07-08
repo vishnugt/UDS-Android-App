@@ -239,15 +239,15 @@ public class Material_Activity extends AppCompatActivity {
                 //connection.setRequestProperty("Content-Type", "application/json");
                 connection.setRequestProperty("Cookie", cookie);
                 OutputStreamWriter osw = new OutputStreamWriter(connection.getOutputStream());
-                String oswrite="{ \"supervisorList\": [ { ";
+                String oswrite="{ \"supervisorList\": [";
                 for(int i=0;i<materials.size();i++)
                 {
-                    oswrite=oswrite.concat("\"material"+(i+1)+"\": \""+mAdapter.countmaterial.get(i).toString()+"\",");
+                    oswrite=oswrite.concat("{\"type\": \"material\" , \"query\" : \""+materials.get(i)+"\" , \"reply\": \""+mAdapter.countmaterial.get(i).toString()+"\"},");
                 }
                 oswrite=oswrite.substring(0,oswrite.length()-1);
                 Date today = new Date();
                 String current = today.toString();
-                oswrite=oswrite.concat("} ], \"requestFields\": { \"projectId\": \""+companyid+"\", \"projectDesc\": \""+desc+"\", \"recordcreationdate\": \""+current+"\", \"monthandYear\": \""+month+" "+year+"\", \"timeClient\" : \"\", \"timeRegional\" : \"\", \"clientId\" : \"\", \"regionalHeadId\" : \"\", \"date\" : \"\", \"deliveryOrVisit\": \"delivery\"}, \"requestType\": \"supervisor\", \"fresh\": true, \"status\": \"Visited\", \"changed\": true, \"transitions\": { \"1\": \"Visited\" }, \"editReason\": \"Automated from app\" }");
+                oswrite=oswrite.concat("], \"requestFields\": { \"projectId\": \""+companyid+"\", \"projectDesc\": \""+desc+"\", \"recordcreationdate\": \""+current+"\", \"monthandYear\": \""+month+" "+year+"\", \"timeClient\" : \"\", \"timeRegional\" : \"\", \"clientId\" : \"\", \"regionalHeadId\" : \"\", \"date\" : \"\", \"deliveryOrVisit\": \"delivery\"}, \"requestType\": \"supervisor\", \"fresh\": true, \"status\": \"Visited\", \"changed\": true, \"transitions\": { \"1\": \"Visited\" }, \"editReason\": \"Automated from app\" }");
                 Log.e("JSON sent to the Server",oswrite);
                 osw.write(String.format(oswrite));
                 osw.flush();

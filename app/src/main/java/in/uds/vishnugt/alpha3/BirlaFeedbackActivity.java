@@ -38,7 +38,6 @@ public class BirlaFeedbackActivity extends AppCompatActivity {
     private RecyclerViewforFeedback mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
 
-
     ArrayList<String> conditions=new ArrayList<>();
     ArrayList<String> remarks=new ArrayList<>();
     ArrayList<String> yesorno=new ArrayList<>();
@@ -60,7 +59,6 @@ public class BirlaFeedbackActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_card_view);
-        /*
         extras=getIntent().getExtras();
         username=extras.getString("username");
         company=extras.getString("company");
@@ -76,19 +74,13 @@ public class BirlaFeedbackActivity extends AppCompatActivity {
         progress.setTitle("Loading");
         progress.setMessage("Wait while loading...");
         progress.setCancelable(false);
-        progress.show();*/
-
+        progress.show();
 
         results = new ArrayList<>();
         mRecyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
        // mRecyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
-        getDataSet("");
-
-
-        mAdapter = new RecyclerViewforFeedback(results);
-        mRecyclerView.setAdapter(mAdapter);
     }
 
     @Override
@@ -124,7 +116,7 @@ public class BirlaFeedbackActivity extends AppCompatActivity {
             StringBuilder result = new StringBuilder();
 
             try {
-                URL url = new URL("http://remote.uds.in:8081/xtime/client/materials/SHRIRAM");
+                URL url = new URL("http://remote.uds.in:8081/xtime/client/feedback/"+client.toUpperCase());
                 urlConnection = url.openConnection();
                 InputStream in = new BufferedInputStream(urlConnection.getInputStream());
                 BufferedReader reader = new BufferedReader(new InputStreamReader(in));
@@ -145,9 +137,9 @@ public class BirlaFeedbackActivity extends AppCompatActivity {
         protected void onPostExecute(String result) {
             Log.d("result", result);
             getDataSet(result);
-            progress.dismiss();
             mAdapter = new RecyclerViewforFeedback(results);
             mRecyclerView.setAdapter(mAdapter);
+            progress.dismiss();
         }
 
         @Override
@@ -164,20 +156,21 @@ public class BirlaFeedbackActivity extends AppCompatActivity {
     {
         JSONObject jsonRootObject;
         try {
-            String name;
-            int id;
+            jsonarray="{\"Feedback\":"+jsonarray+"}";
+            Log.d("Materials",jsonarray);
+            jsonRootObject = new JSONObject(jsonarray);
+            JSONArray jsonArray = jsonRootObject.optJSONArray("Feedback");
+            JSONObject feedbackjsonobj;
+            String question;
             DataObject2 empty = new DataObject2("", "", "", "");
-            for(int i=0; i < 5; i++)
+            for(int i=0; i < jsonArray.length(); i++)
             {
                 results.add(i,empty);
             }
-            for(int i=0; i < 5; i++) {
-                //name = jsonObject.optString("materialDesc").toString();
-                //id = Integer.parseInt(jsonObject.optString("materialId").toString());
-                //Log.d("materials - id", name+"--"+id);
-                //materials.add(id,name);
-                //materials.set(id - 1, name);
-                DataObject2 obj = new DataObject2("vishnugt", "vishnugt", "aa", "aa");
+            for(int i=0; i < jsonArray.length(); i++) {
+                feedbackjsonobj=jsonArray.getJSONObject(i);
+                question=feedbackjsonobj.getString("feedbackQuestion");
+                DataObject2 obj = new DataObject2("", "", "", question);
                 //results.add(id, obj);
                 results.set(i, obj);
             }
@@ -187,7 +180,7 @@ public class BirlaFeedbackActivity extends AppCompatActivity {
     }
 
 
-  /*  private class LongOperationsubmit extends AsyncTask<String, Void, String> {
+    /*private class LongOperationsubmit extends AsyncTask<String, Void, String> {
 
         @Override
         protected String doInBackground(String... params) {
@@ -245,6 +238,5 @@ public class BirlaFeedbackActivity extends AppCompatActivity {
         @Override
         protected void onProgressUpdate(Void... values) {
         }
-    }
-*/
+    }*/
 }
