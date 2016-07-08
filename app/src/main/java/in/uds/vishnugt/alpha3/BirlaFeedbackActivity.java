@@ -38,12 +38,8 @@ public class BirlaFeedbackActivity extends AppCompatActivity {
     private RecyclerViewforFeedback mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
 
-    ArrayList<String> conditions=new ArrayList<>();
-    ArrayList<String> remarks=new ArrayList<>();
-    ArrayList<String> yesorno=new ArrayList<>();
     ArrayList<String> questions=new ArrayList<>();
 
-    AlertDialog alertDialog;
     ArrayList results;
     ProgressDialog progress,progresssubmit;
     Bundle extras;
@@ -94,6 +90,11 @@ public class BirlaFeedbackActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.user:
+                progresssubmit = new ProgressDialog(BirlaFeedbackActivity.this );
+                progresssubmit.setTitle("Loading");
+                progresssubmit.setMessage("Wait while loading...");
+                progresssubmit.setCancelable(false);
+                progresssubmit.show();
                 new LongOperationsubmit().execute("");
                 return true;
         }
@@ -171,7 +172,7 @@ public class BirlaFeedbackActivity extends AppCompatActivity {
         JSONObject jsonRootObject;
         try {
             jsonarray="{\"Feedback\":"+jsonarray+"}";
-            Log.d("Materials",jsonarray);
+            Log.d("Feedback",jsonarray);
             jsonRootObject = new JSONObject(jsonarray);
             JSONArray jsonArray = jsonRootObject.optJSONArray("Feedback");
             JSONObject feedbackjsonobj;
