@@ -52,6 +52,7 @@ public class Material_Activity extends AppCompatActivity {
     String outputresponse;
     String month;
     int year;
+    String date;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,6 +67,7 @@ public class Material_Activity extends AppCompatActivity {
         month=extras.getString("month");
         year=extras.getInt("year");
         client=extras.getString("client");
+        date=extras.getString("date");
         new LongOperation().execute("");
 
         progress = new ProgressDialog(this);
@@ -247,7 +249,7 @@ public class Material_Activity extends AppCompatActivity {
                 oswrite=oswrite.substring(0,oswrite.length()-1);
                 Date today = new Date();
                 String current = today.toString();
-                oswrite=oswrite.concat("], \"requestFields\": { \"projectId\": \""+companyid+"\", \"projectDesc\": \""+desc+"\", \"recordcreationdate\": \""+current+"\", \"monthandYear\": \""+month+" "+year+"\", \"timeClient\" : \"\", \"timeRegional\" : \"\", \"clientId\" : \"\", \"regionalHeadId\" : \"\", \"date\" : \"\", \"deliveryOrVisit\": \"delivery\"}, \"requestType\": \"supervisor\", \"fresh\": true, \"status\": \"Visited\", \"changed\": true, \"transitions\": { \"1\": \"Visited\" }, \"editReason\": \"Automated from app\" }");
+                oswrite=oswrite.concat("], \"requestFields\": { \"projectId\": \""+companyid+"\", \"projectDesc\": \""+desc+"\", \"recordcreationdate\": \""+current+"\", \"monthandYear\": \""+month+" "+year+"\", \"timeClient\" : \"\", \"timeRegional\" : \"\", \"clientId\" : \"\", \"regionalHeadId\" : \"\", \"date\" :\""+ date +"\", \"deliveryOrVisit\": \"delivery\"}, \"requestType\": \"supervisor\", \"fresh\": true, \"status\": \"Visited\", \"changed\": true, \"transitions\": { \"1\": \"Visited\" }, \"editReason\": \"Automated from app\" }");
                 Log.e("JSON sent to the Server",oswrite);
                 osw.write(String.format(oswrite));
                 osw.flush();

@@ -106,6 +106,7 @@ public class ClientSelection_Activity extends AppCompatActivity {
                 sdesc=desc.get(position);
                 senddate=enddates.get(position);
                 Intent intent = new Intent(getApplicationContext(), Delivery_or_Visit.class);
+                //Intent intent = new Intent(getApplicationContext(), TimeInTimeOut.class);
                 intent.putExtra("username",username);
                 intent.putExtra("company",scompany);
                 intent.putExtra("companyid",scompanyid);

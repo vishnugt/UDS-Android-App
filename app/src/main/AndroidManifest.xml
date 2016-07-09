@@ -37,7 +37,8 @@
             android:screenOrientation="portrait" />
         <activity android:name=".listview_activity" />
         <activity android:name=".Activity_Client" />
-        <activity android:name=".BirlaFeedbackActivity"></activity>
+        <activity android:name=".BirlaFeedbackActivity" />
+        <activity android:name=".TimeInTimeOut"></activity>
     </application>
 
 </manifest>

@@ -56,6 +56,8 @@ public class Delivery_or_Visit extends AppCompatActivity {
     Button materialbtn;
     Integer month;
     Integer year;
+    Integer date;
+
     List<String> monthstrings = Arrays.asList( "", "January", "February", "March", "April", "May", "June", "July", "August", "September",
             "October", "November", "December");
     @Override
@@ -145,7 +147,8 @@ public class Delivery_or_Visit extends AppCompatActivity {
     public void feedback(View v)
     {
         if(client.equals("SHRIRAM")) {
-            intent = new Intent(getApplicationContext(), feedback_activity.class);
+            //intent = new Intent(getApplicationContext(), feedback_activity.class);
+            intent = new Intent(getApplicationContext(), TimeInTimeOut.class);
             intent.putExtra("username", username);
             intent.putExtra("company", company);
             intent.putExtra("companyid", companyid);
@@ -155,7 +158,8 @@ public class Delivery_or_Visit extends AppCompatActivity {
             datepick.show();
         }
         if(client.equals("BIRLA")) {
-            intent = new Intent(getApplicationContext(), BirlaFeedbackActivity.class);
+            //intent = new Intent(getApplicationContext(), BirlaFeedbackActivity.class);
+            intent = new Intent(getApplicationContext(), TimeInTimeOut.class);
             intent.putExtra("username", username);
             intent.putExtra("company", company);
             intent.putExtra("companyid", companyid);
@@ -273,10 +277,11 @@ public class Delivery_or_Visit extends AppCompatActivity {
         @Override
         protected void onPostExecute(String result) {
             //Log.d("result", result);
-            result = "2016-04-09 10:37:04.077";
+            //result = "2016-04-09 10:37:04.077";
             time = result;
             month = Integer.parseInt((result.split(" ")[0]).split("-")[1]);
             year = Integer.parseInt(result.split(" ")[0].split("-")[0]);
+            date = Integer.parseInt(result.split(" ")[0].split("-")[2]);
             Log.e("month from server", month+ "" );
             Log.e("year from server", year+ "" );
             if(month == 12)
@@ -326,6 +331,7 @@ public class Delivery_or_Visit extends AppCompatActivity {
                     {
                         intent.putExtra("month",datepick.getSelectedMonthName());
                         intent.putExtra("year",datepick.getSelectedYear());
+                        intent.putExtra("date", time.split(" ")[0]);
                         startActivity(intent);
 
                     }
