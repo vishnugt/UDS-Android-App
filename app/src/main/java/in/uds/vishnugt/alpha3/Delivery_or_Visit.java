@@ -30,6 +30,9 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.math.*;
 
 public class Delivery_or_Visit extends AppCompatActivity {
 
@@ -51,7 +54,10 @@ public class Delivery_or_Visit extends AppCompatActivity {
     ProgressDialog progress;
     String client;
     Button materialbtn;
-
+    Integer month;
+    Integer year;
+    List<String> monthstrings = Arrays.asList( "", "January", "February", "March", "April", "May", "June", "July", "August", "September",
+            "October", "November", "December");
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,7 +73,7 @@ public class Delivery_or_Visit extends AppCompatActivity {
         enddate=extras.getString("enddate");
         client=extras.getString("client");
 
-        new LongOperationtime().execute("");
+
 
         progress = new ProgressDialog(this);
         progress.setTitle("Loading");
@@ -80,18 +86,8 @@ public class Delivery_or_Visit extends AppCompatActivity {
         listview=(ListView)findViewById(R.id.listview);
         materialbtn=(Button)findViewById(R.id.material);
 
-        datepick = new MonthYearPicker(this);
-        datepick.build(new DialogInterface.OnClickListener() {
 
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                if(which==-1) {
-                    intent.putExtra("month",datepick.getSelectedMonthName());
-                    intent.putExtra("year",datepick.getSelectedYear());
-                    startActivity(intent);
-                }
-            }
-        }, null);
+        new LongOperationtime().execute("");
 
         Log.e("End date","--"+datepick.MAX_YEAR+"--");
 
@@ -276,9 +272,29 @@ public class Delivery_or_Visit extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(String result) {
-            Log.d("result", result);
-            datepick.MIN_YEAR=Integer.parseInt(result.split(" ")[0].split("-")[0]);
-            datepick.MAX_YEAR=Integer.parseInt(result.split(" ")[0].split("-")[0]);
+            //Log.d("result", result);
+            result = "2016-04-09 10:37:04.077";
+            time = result;
+            month = Integer.parseInt((result.split(" ")[0]).split("-")[1]);
+            year = Integer.parseInt(result.split(" ")[0].split("-")[0]);
+            Log.e("month from server", month+ "" );
+            Log.e("year from server", year+ "" );
+            if(month == 12)
+            {   datepick.MIN_YEAR = year;
+                datepick.MAX_YEAR = year + 1;
+            }
+            else if(month == 1)
+            {
+                datepick.MIN_YEAR=year - 1;
+                datepick.MAX_YEAR = year;
+            }
+            else
+            {
+                datepick.MIN_YEAR=year;
+                datepick.MAX_YEAR=year;
+
+            }
+            dateset();
             progress.dismiss();
         }
 
@@ -289,6 +305,34 @@ public class Delivery_or_Visit extends AppCompatActivity {
         @Override
         protected void onProgressUpdate(Void... values) {
         }
+    }
+
+    public void dateset()
+    {
+        datepick = new MonthYearPicker(this);
+        datepick.build(new DialogInterface.OnClickListener() {
+
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                if(which==-1) {
+                    Log.e("getSelectedMonthName", datepick.getSelectedMonthName());
+                    int temp1 = Math.max(monthstrings.indexOf(datepick.getSelectedMonthName()), month);
+                    int temp2 = Math.min(monthstrings.indexOf(datepick.getSelectedMonthName()), month);
+                    if(!((temp1 - temp2 < 2 && (year == datepick.getSelectedYear())) || (temp1 - temp2 == 11 && (year != datepick.getSelectedYear()))))
+                    {
+                        Toast.makeText(getApplicationContext(), "Month you have selected is not valid", Toast.LENGTH_LONG).show();
+                    }
+                    else
+                    {
+                        intent.putExtra("month",datepick.getSelectedMonthName());
+                        intent.putExtra("year",datepick.getSelectedYear());
+                        startActivity(intent);
+
+                    }
+                }
+            }
+        }, null);
+
     }
 
 }
