@@ -180,7 +180,7 @@ public class feedback_activity extends AppCompatActivity {
                 oswrite=oswrite.concat("\"query\":\"comments\",\"reply\":\""+input.get(7).toString()+"\"}");
                 Date today = new Date();
                 String current = today.toString();
-                oswrite=oswrite.concat("], \"requestFields\": { \"projectId\": \""+companyid+"\", \"projectDesc\": \""+desc+"\", \"recordcreationdate\": \""+current+"\", \"monthandYear\": \""+month+" "+year+"\", \"timeClient\" : \"\", \"timeRegional\" : \"\", \"clientId\" : \"\", \"regionalHeadId\" : \"\", \"date\" : \"" + date + " " + timeIn + " - " + timeOut + "\", \"deliveryOrVisit\": \"visit\"}, \"requestType\": \"supervisor\", \"fresh\": true, \"status\": \"Visited\", \"changed\": true, \"transitions\": { \"1\": \"Visited\" }, \"editReason\": \"Automated from app\" }");
+                oswrite=oswrite.concat("], \"requestFields\": { \"projectId\": \""+companyid+"\", \"projectDesc\": \""+desc+"\", \"recordcreationdate\": \""+current+"\", \"monthandYear\": \""+month+" "+year+"\", \"timeClient\" : \"\", \"timeRegional\" : \"\", \"clientId\" : \"\", \"regionalHeadId\" : \"\", \"date\" : \"" + date + " " + timeIn + " - " + timeOut + "\", \"deliveryOrVisit\": \"visit\" , \"companyName\":\""+client+"\"}, \"requestType\": \"supervisor\", \"fresh\": true, \"status\": \"Visited\", \"changed\": true, \"transitions\": { \"1\": \"Visited\" }, \"editReason\": \"Automated from app\" }");
                 Log.e("JSON sent to the Server",oswrite);
                 osw.write(String.format(oswrite));
                 osw.flush();
