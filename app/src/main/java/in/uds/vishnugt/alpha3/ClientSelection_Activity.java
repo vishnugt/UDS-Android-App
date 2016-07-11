@@ -51,7 +51,7 @@ public class ClientSelection_Activity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_card_view);
-        setTitle("Client Selection");
+        setTitle("Site Selection");
 
         extras=getIntent().getExtras();
         username=extras.getString("uname");

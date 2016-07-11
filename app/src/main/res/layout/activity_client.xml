@@ -14,19 +14,29 @@
         android:layout_height="wrap_content"
         android:text="Birla Life Insurance"
         android:id="@+id/button2"
-        android:layout_marginTop="92dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignLeft="@+id/button3"
-        android:layout_alignStart="@+id/button3"
-        android:onClick="birlabtn"/>
+        android:onClick="birlabtn"
+        android:layout_above="@+id/button3"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="19dp" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Shirram Transport"
         android:id="@+id/button3"
+        android:layout_marginBottom="70dp"
+        android:onClick="shrirrambtn"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="125dp"
-        android:onClick="shrirrambtn"/>
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Client Selection"
+        android:textStyle="bold"
+        android:id="@+id/textView5"
+        android:layout_marginTop="34dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
 </RelativeLayout>

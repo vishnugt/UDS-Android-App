@@ -1,9 +1,14 @@
 package in.uds.vishnugt.alpha3;
 
+import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TimePicker;
 
@@ -45,58 +50,72 @@ public class TimeInTimeOut extends AppCompatActivity {
         timeIn = (TimePicker)findViewById(R.id.timeIn);
         timeOut = (TimePicker)findViewById(R.id.timeOut);
     }
-    public void submitbtn(View view)
-    {
-        SimpleDateFormat sdfDate = new SimpleDateFormat("hh:mm a");//dd/MM/yyyy
-        Date now = new Date();
-        //now.setHours( timeIn.getCurrentHour() < 12 ? timeIn.getCurrentHour()  : timeIn.getCurrentHour() -12 );
-        now.setHours( timeIn.getCurrentHour());
-        now.setMinutes(timeIn.getCurrentMinute());
-        String timeInStr = sdfDate.format(now);
-        Log.e("timeInformat", timeInStr);
 
-        //now.setHours( timeOut.getCurrentHour() < 12 ? timeOut.getCurrentHour()  : timeOut.getCurrentHour() -12 );
-        now.setHours( timeOut.getCurrentHour() );
-        now.setMinutes(timeOut.getCurrentMinute());
-        String timeOutStr = sdfDate.format(now);
-        Log.e("timeInformat", timeInStr);
 
-        Log.e("timein", timeInStr);
-        Log.e("timeout", timeOutStr);
-        Log.e("client", client);
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        menu.getItem(0).setTitle("SUBMIT");
+        return true;
+    }
 
-        if(client.equals("SHRIRAM")) {
-            Intent intent = new Intent(getApplicationContext(), feedback_activity.class);
-            //intent = new Intent(getApplicationContext(), TimeInTimeOut.class);
-            intent.putExtra("username", username);
-            intent.putExtra("company", company);
-            intent.putExtra("companyid", companyid);
-            intent.putExtra("description", desc);
-            intent.putExtra("cookie", cookie);
-            intent.putExtra("client", client);
-            intent.putExtra("month",month);
-            intent.putExtra("year",year);
-            intent.putExtra("timeIn", timeInStr);
-            intent.putExtra("timeOut", timeOutStr);
-            intent.putExtra("date", date);
-            startActivity(intent);
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.user:
+                SimpleDateFormat sdfDate = new SimpleDateFormat("hh:mm a");//dd/MM/yyyy
+                Date now = new Date();
+                //now.setHours( timeIn.getCurrentHour() < 12 ? timeIn.getCurrentHour()  : timeIn.getCurrentHour() -12 );
+                now.setHours( timeIn.getCurrentHour());
+                now.setMinutes(timeIn.getCurrentMinute());
+                String timeInStr = sdfDate.format(now);
+                Log.e("timeInformat", timeInStr);
+
+                //now.setHours( timeOut.getCurrentHour() < 12 ? timeOut.getCurrentHour()  : timeOut.getCurrentHour() -12 );
+                now.setHours( timeOut.getCurrentHour() );
+                now.setMinutes(timeOut.getCurrentMinute());
+                String timeOutStr = sdfDate.format(now);
+                Log.e("timeInformat", timeInStr);
+
+                Log.e("timein", timeInStr);
+                Log.e("timeout", timeOutStr);
+                Log.e("client", client);
+
+                if(client.equals("SHRIRAM")) {
+                    Intent intent = new Intent(getApplicationContext(), feedback_activity.class);
+                    //intent = new Intent(getApplicationContext(), TimeInTimeOut.class);
+                    intent.putExtra("username", username);
+                    intent.putExtra("company", company);
+                    intent.putExtra("companyid", companyid);
+                    intent.putExtra("description", desc);
+                    intent.putExtra("cookie", cookie);
+                    intent.putExtra("client", client);
+                    intent.putExtra("month",month);
+                    intent.putExtra("year",year);
+                    intent.putExtra("timeIn", timeInStr);
+                    intent.putExtra("timeOut", timeOutStr);
+                    intent.putExtra("date", date);
+                    startActivity(intent);
+                }
+                if(client.equals("BIRLA")) {
+                    Intent intent = new Intent(getApplicationContext(), BirlaFeedbackActivity.class);
+                    //intent = new Intent(getApplicationContext(), TimeInTimeOut.class);
+                    intent.putExtra("username", username);
+                    intent.putExtra("company", company);
+                    intent.putExtra("companyid", companyid);
+                    intent.putExtra("description", desc);
+                    intent.putExtra("cookie", cookie);
+                    intent.putExtra("client", client);
+                    intent.putExtra("month",month);
+                    intent.putExtra("year",year);
+                    intent.putExtra("timeIn", timeInStr);
+                    intent.putExtra("timeOut", timeOutStr);
+                    intent.putExtra("date", date);
+                    startActivity(intent);
+                }
+                return true;
         }
-        if(client.equals("BIRLA")) {
-            Intent intent = new Intent(getApplicationContext(), BirlaFeedbackActivity.class);
-            //intent = new Intent(getApplicationContext(), TimeInTimeOut.class);
-            intent.putExtra("username", username);
-            intent.putExtra("company", company);
-            intent.putExtra("companyid", companyid);
-            intent.putExtra("description", desc);
-            intent.putExtra("cookie", cookie);
-            intent.putExtra("client", client);
-            intent.putExtra("month",month);
-            intent.putExtra("year",year);
-            intent.putExtra("timeIn", timeInStr);
-            intent.putExtra("timeOut", timeOutStr);
-            intent.putExtra("date", date);
-            startActivity(intent);
-        }
 
+        return super.onOptionsItemSelected(item);
     }
 }
