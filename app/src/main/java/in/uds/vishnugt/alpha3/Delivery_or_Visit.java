@@ -184,8 +184,19 @@ public class Delivery_or_Visit extends AppCompatActivity {
             {
                 statusdate="";
                 jsonobj=jsonarray.getJSONObject(i);
-                statusdate=statusdate.concat(jsonobj.getString("status"));
-                statusdate=statusdate.concat(" : "+jsonobj.getString("timestamp"));
+                if(jsonobj.getString("status").equals("BATCH-JOB-TRIGGERED-CLIENT"))
+                    statusdate=statusdate.concat("Mail sent to client");
+                if(jsonobj.getString("status").equals("VISITED"))
+                    statusdate=statusdate.concat("Mail to be sent to client");
+                if(jsonobj.getString("status").equals("VISITED"))
+                    statusdate=statusdate.concat("Mail to be sent to client");
+                if(jsonobj.getString("status").equals("APPROVED-BY-CLIENT"))
+                    statusdate=statusdate.concat("Client approved");
+                if(jsonobj.getString("status").equals("REJECTED-BY-CLIENT"))
+                    statusdate=statusdate.concat("Client rejected");
+                if(jsonobj.getString("status").equals("DUE_MODIFICATION"))
+                    statusdate=statusdate.concat("Client rejected");
+                statusdate=statusdate.concat(" : "+jsonobj.getString("timestamp").split(" ")[0]);
                 array.add(i,statusdate);
             }
         } catch (JSONException e) {
